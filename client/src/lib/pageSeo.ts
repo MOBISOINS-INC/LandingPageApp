@@ -49,6 +49,11 @@ const PAGES = {
     FR: ['Politique relative aux témoins', 'Les témoins (cookies) utilisés sur le site MobiSoins et comment gérer vos préférences.'],
     EN: ['Cookie Policy', 'The cookies used on the MobiSoins website and how to manage your preferences.'],
   },
+  'suppression-compte': {
+    path: '/suppression-compte',
+    FR: ['Supprimer votre compte', 'Comment supprimer votre compte MobiSoins et vos données, dans l’application ou par courriel.'],
+    EN: ['Delete your account', 'How to delete your MobiSoins account and data, in the app or by email.'],
+  },
 } as const;
 
 export type StaticPage = keyof typeof PAGES;

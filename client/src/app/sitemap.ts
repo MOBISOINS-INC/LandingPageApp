@@ -18,6 +18,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: '/apropos', priority: 0.5, freq: 'monthly' },
     { path: '/contact', priority: 0.5, freq: 'monthly' },
     { path: '/confidentialite', priority: 0.2, freq: 'yearly' },
+    { path: '/suppression-compte', priority: 0.2, freq: 'yearly' },
     { path: '/conditions', priority: 0.2, freq: 'yearly' },
     { path: '/cookies', priority: 0.2, freq: 'yearly' },
   ];
