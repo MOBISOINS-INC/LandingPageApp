@@ -131,7 +131,7 @@ export const PRIVACY: Record<Language, PrivacyDoc> = {
         "body": [
           "Nous conservons vos renseignements tant que votre compte est actif et aussi longtemps que nécessaire aux finalités décrites.",
           "À la suppression du compte, les renseignements personnels sont effacés ou anonymisés dans un délai de trente (30) jours, sauf obligation légale de conservation (par exemple, pièces comptables conservées sept (7) ans).",
-          "Vous pouvez supprimer votre compte dans l'Application (Profil > Informations personnelles > Supprimer le compte) ou en suivant les instructions publiées à https://www.mobisoins.com/suppression-compte."
+          "Vous pouvez supprimer votre compte dans l'Application (Compte > Mon profil > Supprimer le compte) ou en suivant les instructions publiées à https://www.mobisoins.com/suppression-compte."
         ]
       },
       {
@@ -326,7 +326,7 @@ export const PRIVACY: Record<Language, PrivacyDoc> = {
         "body": [
           "We retain your information for as long as your account is active and as long as necessary for the purposes described.",
           "On account deletion, personal data is erased or anonymized within thirty (30) days, except where the law requires longer retention (for example, accounting records kept for seven (7) years).",
-          "You can delete your account in the App (Profile > Personal information > Delete account) or by following the instructions at https://www.mobisoins.com/en/suppression-compte."
+          "You can delete your account in the App (Account > My profile > Delete account) or by following the instructions at https://www.mobisoins.com/en/suppression-compte."
         ]
       },
       {
