@@ -15,7 +15,7 @@ const CONTENT = {
         title: 'Dans l’application',
         body: [
           'Ouvrez l’application MobiSoins et connectez-vous.',
-          'Allez dans Compte > Mon profil > Supprimer le compte, puis confirmez.',
+          'Ouvrez l’onglet Compte, touchez votre profil (ou « Informations personnelles »), puis Supprimer le compte, et confirmez.',
           'Votre compte est désactivé immédiatement et supprimé définitivement après 30 jours. Si vous vous reconnectez avant ce délai, la suppression est annulée.',
         ],
       },
@@ -50,7 +50,7 @@ const CONTENT = {
         title: 'In the app',
         body: [
           'Open the MobiSoins app and sign in.',
-          'Go to Account > My profile > Delete account, then confirm.',
+          'Open the Account tab, tap your profile (or "Personal information"), then Delete account, and confirm.',
           'Your account is deactivated immediately and permanently deleted after 30 days. If you sign back in before then, the deletion is cancelled.',
         ],
       },
