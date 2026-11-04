@@ -86,6 +86,7 @@ export const Footer = () => {
         { title: t('footer.privacy'), href: '/confidentialite' },
         { title: t('footer.terms'), href: '/conditions' },
         { title: t('footer.cookies'), href: '/cookies' },
+        { title: t('footer.deleteAccount'), href: '/suppression-compte' },
       ],
     },
     {
