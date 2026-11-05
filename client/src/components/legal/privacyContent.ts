@@ -40,8 +40,14 @@ export const PRIVACY: Record<Language, PrivacyDoc> = {
           "Données de contact : adresse courriel, numéro de téléphone, adresse postale.",
           "Données de compte : identifiants, mot de passe (haché), rôle, préférences.",
           "Données de paiement : traitées et stockées par Stripe — nous ne conservons aucun numéro de carte.",
-          "Données de santé : informations communiquées dans le cadre d'une réservation (allergies, traitements, notes pour l'Infirmier).",
+          "Données de santé : profil santé rempli à l'inscription (sexe, taille, poids, allergies, conditions chroniques, grossesse, médicaments anticoagulants, besoins de soins et de mobilité) et informations communiquées dans le cadre d'une réservation (traitements, notes pour l'Infirmier).",
+          "Personne à joindre en cas d'urgence : nom et numéro de téléphone que vous nous fournissez, utilisés seulement en cas d'incident pendant une visite.",
+          "Photo de profil : facultative pour les Patients ; montrée au Patient pour les Infirmiers.",
           "Données professionnelles (Infirmiers) : licence, ordre professionnel, qualifications et, le cas échéant, résultats de vérifications.",
+          "Pièce d'identité (Infirmiers) : photo d'une pièce d'identité officielle (passeport ou permis de conduire) et égoportrait, utilisés seulement pour vérifier votre identité. Elles ne sont jamais montrées aux Patients.",
+          "Véhicule (Infirmiers) : marque, modèle, couleur et plaque, montrés au Patient pendant une visite pour qu'il reconnaisse votre voiture.",
+          "Versements (Infirmiers) : vos coordonnées bancaires sont saisies directement chez Stripe (Stripe Connect) ; nous ne conservons que le nom de la banque et les 4 derniers chiffres du compte.",
+          "Enregistrements audio (Infirmiers) : seulement si vous démarrez vous-même un enregistrement de sécurité depuis le Centre de sécurité, pour documenter un incident. L'enregistrement ne se fait jamais à votre insu ni en arrière-plan. Il est conservé au Canada, accessible seulement à l'équipe de sécurité de MobiSoins, et conservé seulement le temps nécessaire au traitement de l'incident et au respect de nos obligations légales. Les personnes présentes pendant la visite peuvent être entendues sur l'enregistrement.",
           "Données techniques : adresse IP, identifiant d'appareil, type d'appareil, journaux d'utilisation.",
           "Données de localisation : adresse de la visite et, avec votre autorisation, position de votre appareil (position précise pour les Infirmiers, y compris en arrière-plan pendant une visite active). Voir la section 8."
         ]
@@ -93,11 +99,13 @@ export const PRIVACY: Record<Language, PrivacyDoc> = {
       {
         "title": "9. Communication à des tiers",
         "body": [
-          "Stripe — traitement des paiements (norme PCI-DSS).",
+          "Stripe — traitement des paiements (norme PCI-DSS) et, pour les Infirmiers, versements (Stripe Connect).",
+          "ipwho.is et reallyfreegeoip.org — position approximative déduite de votre adresse IP, pour centrer la carte lorsque la position de l'appareil n'est pas encore connue.",
           "Amazon Web Services — hébergement et authentification (Cognito).",
           "Google Firebase — messagerie entre Patient et Infirmier et notifications.",
           "Mapbox — cartes et calcul des itinéraires.",
           "Sentry — rapports de plantage et diagnostics techniques, sans données de santé.",
+          "Google et Meta (Facebook) — connexion avec votre compte Google ou Facebook, seulement si vous choisissez cette option.",
           "Infirmiers acceptés sur la plateforme — uniquement les informations strictement nécessaires à la visite.",
           "Conseillers, auditeurs ou acquéreurs potentiels — dans le cadre d'une opération d'entreprise, sous conditions de confidentialité.",
           "Autorités publiques compétentes — uniquement lorsque la loi l'exige ou pour protéger nos droits et la sécurité d'autrui.",
@@ -131,7 +139,7 @@ export const PRIVACY: Record<Language, PrivacyDoc> = {
         "body": [
           "Nous conservons vos renseignements tant que votre compte est actif et aussi longtemps que nécessaire aux finalités décrites.",
           "À la suppression du compte, les renseignements personnels sont effacés ou anonymisés dans un délai de trente (30) jours, sauf obligation légale de conservation (par exemple, pièces comptables conservées sept (7) ans).",
-          "Vous pouvez supprimer votre compte dans l'Application (Profil > Informations personnelles > Supprimer le compte) ou en suivant les instructions publiées à https://www.mobisoins.com/suppression-compte."
+          "Vous pouvez supprimer votre compte dans l'Application (onglet Compte > touchez votre profil ou « Informations personnelles » > Supprimer le compte) ou en suivant les instructions publiées à https://www.mobisoins.com/suppression-compte."
         ]
       },
       {
@@ -235,8 +243,14 @@ export const PRIVACY: Record<Language, PrivacyDoc> = {
           "Contact data: email address, phone number, postal address.",
           "Account data: credentials, hashed password, role, preferences.",
           "Payment data: processed and stored by Stripe — we never retain card numbers.",
-          "Health data: information you provide as part of a booking (allergies, treatments, notes for the Nurse).",
+          "Health data: the health profile you complete at sign-up (sex, height, weight, allergies, chronic conditions, pregnancy, blood thinners, care and mobility needs) and information you provide as part of a booking (treatments, notes for the Nurse).",
+          "Emergency contact: the name and phone number you give us, used only if an incident occurs during a visit.",
+          "Profile photo: optional for Patients; shown to the Patient for Nurses.",
           "Professional data (Nurses): license, professional order, qualifications, and where applicable verification results.",
+          "Identity document (Nurses): a photo of an official ID (passport or driver's licence) and a selfie, used only to verify your identity. They are never shown to Patients.",
+          "Vehicle (Nurses): make, model, colour and plate, shown to the Patient during a visit so they can recognise your car.",
+          "Payouts (Nurses): your bank details are entered directly with Stripe (Stripe Connect); we keep only the bank name and the last 4 digits of the account.",
+          "Audio recordings (Nurses): only if you start a safety recording yourself from the Safety Center, to document an incident. Recording never happens without your knowledge or in the background. It is stored in Canada, accessible only to the MobiSoins safety team, and kept only as long as needed to handle the incident and meet our legal obligations. People present during the visit may be heard on the recording.",
           "Technical data: IP address, device identifier, device type, usage logs.",
           "Location data: the visit address and, with your permission, your device location (precise location for Nurses, including in the background during an active visit). See section 8."
         ]
@@ -288,11 +302,13 @@ export const PRIVACY: Record<Language, PrivacyDoc> = {
       {
         "title": "9. Disclosure to third parties",
         "body": [
-          "Stripe — payment processing (PCI-DSS compliant).",
+          "Stripe — payment processing (PCI-DSS compliant) and, for Nurses, payouts (Stripe Connect).",
+          "ipwho.is and reallyfreegeoip.org — approximate location derived from your IP address, to centre the map when your device location is not known yet.",
           "Amazon Web Services — hosting and authentication (Cognito).",
           "Google Firebase — Patient–Nurse messaging and notifications.",
           "Mapbox — maps and route calculation.",
           "Sentry — crash reports and technical diagnostics, without health data.",
+          "Google and Meta (Facebook) — sign-in with your Google or Facebook account, only if you choose that option.",
           "Nurses on the platform — only the information strictly necessary for the visit.",
           "Advisors, auditors, or potential acquirers — in connection with a corporate transaction, under confidentiality terms.",
           "Public authorities — only when required by law or to protect our rights and the safety of others.",
@@ -326,7 +342,7 @@ export const PRIVACY: Record<Language, PrivacyDoc> = {
         "body": [
           "We retain your information for as long as your account is active and as long as necessary for the purposes described.",
           "On account deletion, personal data is erased or anonymized within thirty (30) days, except where the law requires longer retention (for example, accounting records kept for seven (7) years).",
-          "You can delete your account in the App (Profile > Personal information > Delete account) or by following the instructions at https://www.mobisoins.com/en/suppression-compte."
+          "You can delete your account in the App (Account tab > tap your profile or \"Personal information\" > Delete account) or by following the instructions at https://www.mobisoins.com/en/suppression-compte."
         ]
       },
       {
