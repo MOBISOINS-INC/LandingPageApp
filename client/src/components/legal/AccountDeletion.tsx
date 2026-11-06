@@ -11,7 +11,7 @@ import { useLanguage } from '../../contexts/LanguageContext';
 // (BackendApp: src/modules/account-deletion/account-deletion.service.ts) and
 // the app's labels (FrontendApp: src/i18n/fr.ts → deleteAccount, dataExport).
 
-const EMAIL = 'privacy@mobisoins.com';
+const EMAIL = 'info@mobisoins.com';
 
 type Item = { label: string; detail: string };
 
@@ -46,7 +46,7 @@ const CONTENT: Record<'FR' | 'EN', Doc> = {
     ],
     summaryTitle: 'En bref',
     summary: [
-      'Deux façons de demander la suppression : dans l’application, ou par courriel à privacy@mobisoins.com.',
+      'Deux façons de demander la suppression : dans l’application, ou par courriel à info@mobisoins.com.',
       'Votre compte est désactivé immédiatement et supprimé définitivement après 30 jours.',
       'Pendant ces 30 jours, vous pouvez annuler la suppression en vous reconnectant.',
       'Seuls les dossiers de visites et de paiements exigés par la loi sont conservés (7 ans), sans votre nom.',
@@ -68,7 +68,7 @@ const CONTENT: Record<'FR' | 'EN', Doc> = {
       {
         title: 'Méthode 2 : par courriel, sans l’application',
         steps: [
-          'Écrivez à privacy@mobisoins.com avec l’objet « Suppression de compte ».',
+          'Écrivez à info@mobisoins.com avec l’objet « Suppression de compte ».',
           'Envoyez le message depuis l’adresse courriel de votre compte. Indiquez votre nom et votre type de compte (Patient, Infirmier(ère) ou Entreprise). Si vous vous êtes inscrit avec un numéro de téléphone, indiquez ce numéro.',
           'Pour protéger votre compte, nous vérifions votre identité avant d’agir, par exemple en vous demandant de confirmer un code. Nous ne vous demanderons jamais votre mot de passe.',
           'Après la vérification, nous lançons la suppression et vous la confirmons par courriel. Le même délai de 30 jours s’applique.',
@@ -151,7 +151,7 @@ const CONTENT: Record<'FR' | 'EN', Doc> = {
       {
         title: 'Questions',
         intro: [
-          'Pour toute question sur la suppression de votre compte ou sur vos autres droits (accès, rectification, portabilité), écrivez à notre responsable de la protection des renseignements personnels : privacy@mobisoins.com.',
+          'Pour toute question sur la suppression de votre compte ou sur vos autres droits (accès, rectification, portabilité), écrivez à notre responsable de la protection des renseignements personnels : info@mobisoins.com.',
           'Pour en savoir plus, consultez notre politique de confidentialité.',
         ],
       },
@@ -168,7 +168,7 @@ const CONTENT: Record<'FR' | 'EN', Doc> = {
     ],
     summaryTitle: 'At a glance',
     summary: [
-      'Two ways to request deletion: in the app, or by email to privacy@mobisoins.com.',
+      'Two ways to request deletion: in the app, or by email to info@mobisoins.com.',
       'Your account is deactivated immediately and permanently deleted after 30 days.',
       'During those 30 days, you can cancel the deletion by signing back in.',
       'Only the visit and payment records the law requires are kept (7 years), without your name.',
@@ -190,7 +190,7 @@ const CONTENT: Record<'FR' | 'EN', Doc> = {
       {
         title: 'Method 2: by email, without the app',
         steps: [
-          'Email privacy@mobisoins.com with the subject "Account deletion".',
+          'Email info@mobisoins.com with the subject "Account deletion".',
           'Send it from your account’s email address. Include your name and account type (Patient, Nurse or Organization). If you signed up with a phone number, include that number.',
           'To protect your account, we verify your identity before acting, for example by asking you to confirm a code. We will never ask for your password.',
           'Once verified, we start the deletion and confirm it by email. The same 30-day period applies.',
@@ -273,7 +273,7 @@ const CONTENT: Record<'FR' | 'EN', Doc> = {
       {
         title: 'Questions',
         intro: [
-          'For any question about deleting your account or about your other rights (access, correction, portability), email our privacy officer: privacy@mobisoins.com.',
+          'For any question about deleting your account or about your other rights (access, correction, portability), email our privacy officer: info@mobisoins.com.',
           'To learn more, read our privacy policy.',
         ],
       },
@@ -284,7 +284,7 @@ const CONTENT: Record<'FR' | 'EN', Doc> = {
 
 // Turns the contact email and the "privacy policy" phrase into links.
 function rich(text: string, privacyHref: string): React.ReactNode {
-  const parts = text.split(/(privacy@mobisoins\.com|politique de confidentialité|privacy policy)/);
+  const parts = text.split(/(info@mobisoins.com|politique de confidentialité|privacy policy)/);
   return parts.map((part, i) => {
     if (part === EMAIL) {
       return (
