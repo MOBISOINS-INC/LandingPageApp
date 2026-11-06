@@ -29,7 +29,7 @@ export const PRIVACY: Record<Language, PrivacyDoc> = {
       {
         "title": "2. Responsable et portée",
         "body": [
-          "MobiSoins est responsable des renseignements personnels traités dans le cadre de l'Application. Notre responsable de la protection des renseignements personnels peut être joint à privacy@mobisoins.com.",
+          "MobiSoins est responsable des renseignements personnels traités dans le cadre de l'Application. Notre responsable de la protection des renseignements personnels peut être joint à info@mobisoins.com.",
           "En utilisant l'Application, vous reconnaissez avoir pris connaissance de la présente politique."
         ]
       },
@@ -152,7 +152,7 @@ export const PRIVACY: Record<Language, PrivacyDoc> = {
           "Vous opposer au traitement ou en demander la limitation, dans les limites prévues par la loi.",
           "Demander la portabilité de vos renseignements dans un format technologique structuré et couramment utilisé.",
           "Retirer votre consentement à tout moment, pour les traitements fondés sur le consentement.",
-          "Pour exercer ces droits, contactez : privacy@mobisoins.com. Nous répondrons dans les délais prévus par la loi."
+          "Pour exercer ces droits, contactez : info@mobisoins.com. Nous répondrons dans les délais prévus par la loi."
         ]
       },
       {
@@ -198,7 +198,7 @@ export const PRIVACY: Record<Language, PrivacyDoc> = {
       {
         "title": "21. Responsable et plaintes",
         "body": [
-          "Pour toute question, demande ou plainte relative à vos renseignements personnels, contactez notre responsable de la protection des renseignements personnels à privacy@mobisoins.com.",
+          "Pour toute question, demande ou plainte relative à vos renseignements personnels, contactez notre responsable de la protection des renseignements personnels à info@mobisoins.com.",
           "Si vous estimez que vos droits n'ont pas été respectés, vous pouvez déposer une plainte auprès de la Commission d'accès à l'information du Québec ou du Commissariat à la protection de la vie privée du Canada."
         ]
       },
@@ -213,7 +213,7 @@ export const PRIVACY: Record<Language, PrivacyDoc> = {
         "title": "23. Contact",
         "body": [
           "Responsable de la protection des renseignements personnels",
-          "MobiSoins — privacy@mobisoins.com"
+          "MobiSoins — info@mobisoins.com"
         ]
       }
     ]
@@ -232,7 +232,7 @@ export const PRIVACY: Record<Language, PrivacyDoc> = {
       {
         "title": "2. Who we are and scope",
         "body": [
-          "MobiSoins is responsible for the personal information processed through the App. Our Privacy Officer can be reached at privacy@mobisoins.com.",
+          "MobiSoins is responsible for the personal information processed through the App. Our Privacy Officer can be reached at info@mobisoins.com.",
           "By using the App, you acknowledge that you have read this policy."
         ]
       },
@@ -355,7 +355,7 @@ export const PRIVACY: Record<Language, PrivacyDoc> = {
           "Object to or request restriction of processing, within the limits of the law.",
           "Request portability of your information in a structured, commonly used technological format.",
           "Withdraw consent at any time, for processing based on consent.",
-          "To exercise these rights, contact: privacy@mobisoins.com. We will respond within the timeframes required by law."
+          "To exercise these rights, contact: info@mobisoins.com. We will respond within the timeframes required by law."
         ]
       },
       {
@@ -401,7 +401,7 @@ export const PRIVACY: Record<Language, PrivacyDoc> = {
       {
         "title": "21. Privacy Officer and complaints",
         "body": [
-          "For any question, request, or complaint regarding your personal information, contact our Privacy Officer at privacy@mobisoins.com.",
+          "For any question, request, or complaint regarding your personal information, contact our Privacy Officer at info@mobisoins.com.",
           "If you believe your rights have not been respected, you may file a complaint with Quebec's Commission d'accès à l'information or the Office of the Privacy Commissioner of Canada."
         ]
       },
@@ -416,7 +416,7 @@ export const PRIVACY: Record<Language, PrivacyDoc> = {
         "title": "23. Contact",
         "body": [
           "Privacy Officer",
-          "MobiSoins — privacy@mobisoins.com"
+          "MobiSoins — info@mobisoins.com"
         ]
       }
     ]

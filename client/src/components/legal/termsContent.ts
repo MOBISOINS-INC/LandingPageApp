@@ -400,7 +400,7 @@ export const TERMS: Record<Language, TermsDoc> = {
         "title": "50. Avis et contact",
         "body": [
           "Vous pouvez nous transmettre tout avis à support@mobisoins.com. Nous pouvons vous transmettre des avis via l'Application, par courriel ou par message texte.",
-          "Pour toute question relative aux présentes Conditions : support@mobisoins.com. Pour toute question relative à vos renseignements personnels : privacy@mobisoins.com."
+          "Pour toute question relative aux présentes Conditions : support@mobisoins.com. Pour toute question relative à vos renseignements personnels : info@mobisoins.com."
         ]
       }
     ]
@@ -790,7 +790,7 @@ export const TERMS: Record<Language, TermsDoc> = {
         "title": "50. Notices and contact",
         "body": [
           "You may send us any notice at support@mobisoins.com. We may send you notices via the App, by email, or by text message.",
-          "Questions about these Terms: support@mobisoins.com. Questions about your personal information: privacy@mobisoins.com."
+          "Questions about these Terms: support@mobisoins.com. Questions about your personal information: info@mobisoins.com."
         ]
       }
     ]
