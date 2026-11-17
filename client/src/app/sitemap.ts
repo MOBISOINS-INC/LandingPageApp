@@ -1,6 +1,7 @@
 import type { MetadataRoute } from 'next';
 import { ARTICLE_INDEX } from '../data/articleIndex';
 import { allServiceSlugs } from '../data/services';
+import { allCitySlugs } from '../data/cities';
 import { absoluteUrl, languageAlternates } from '../lib/seo';
 import { localizePath } from '../lib/i18n';
 
@@ -12,6 +13,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: '/', priority: 1, freq: 'weekly' },
     { path: '/services', priority: 0.9, freq: 'monthly' },
     ...allServiceSlugs().map((slug) => ({ path: `/services/${slug}`, priority: 0.8, freq: 'monthly' as Freq })),
+    { path: '/infirmiere-a-domicile', priority: 0.8, freq: 'monthly' },
+    ...allCitySlugs().map((slug) => ({ path: `/infirmiere-a-domicile/${slug}`, priority: 0.8, freq: 'monthly' as Freq })),
     { path: '/articles', priority: 0.8, freq: 'weekly' },
     ...ARTICLE_INDEX.map((a) => ({ path: `/articles/${a.slug}`, priority: 0.7, freq: 'monthly' as Freq, lastModified: a.dateModified })),
     { path: '/faq', priority: 0.6, freq: 'monthly' },

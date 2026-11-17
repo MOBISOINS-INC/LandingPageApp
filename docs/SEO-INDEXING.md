@@ -91,3 +91,26 @@ Verification is usually by postcard or video — start it now; it can take 1–2
       matching service page; add the EN version under `/en`.
 - [ ] Ask early customers for **Google reviews** on the GBP listing (reply to each in French).
 - [ ] Re-run PageSpeed Insights mobile and compare LCP against the baseline noted in step E.
+
+## G. Visitor analytics (Plausible) — what brings sign-ups
+
+The site has no analytics until these are set (`client/src/lib/analytics.ts`, wired in `RootDocument.tsx`).
+Plausible sets **no cookies**, so no consent banner is needed under Quebec's Law 25.
+
+1. Create an account at https://plausible.io and add the site `mobisoins.com`.
+2. Netlify → env var `NEXT_PUBLIC_PLAUSIBLE_DOMAIN=mobisoins.com` (the exact name you added in Plausible) → redeploy.
+3. Optional: if Plausible's install snippet gives a site-specific script URL (`https://plausible.io/js/pa-….js`),
+   also set `NEXT_PUBLIC_PLAUSIBLE_SRC=<that URL>`. Without it the site uses `script.outbound-links.js`, which also
+   counts clicks to the waitlist Google Form as **Outbound Link: Click** (add it as a goal in Plausible).
+4. Confirm: `curl -s https://www.mobisoins.com/ | grep plausible` prints the script tag; the build log says
+   `[analytics] Plausible on for …`.
+5. Plausible → Settings → Integrations → connect **Google Search Console** to see search keywords next to visits.
+
+## H. Browser-language redirect
+
+`client/src/proxy.ts` sends a visitor to the English page **on the server, before the page loads**, when their
+browser (Accept-Language) lists no French at all. French or bilingual browsers, crawlers, requests with no
+Accept-Language, and anyone who used the FR/EN switcher (cookie `lang`) are never redirected. Each redirect is
+logged as `[i18n] redirect … -> …` in the Netlify function logs. Check after deploy:
+`curl -sI -H 'Accept-Language: en-US' https://www.mobisoins.com/faq` → `307`, `location: /en/faq`;
+`curl -sI https://www.mobisoins.com/faq` → `200`.

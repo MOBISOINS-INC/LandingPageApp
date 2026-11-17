@@ -5,6 +5,7 @@ import { SERVICE_PHOTOS } from '../data/servicePhotos';
 import { absoluteUrl, jsonLd, pageMetadata } from './seo';
 import { AREA_SERVED, ORGANIZATION_ID } from './organizationLd';
 import { localizePath } from './i18n';
+import { serviceSearchDescription, serviceSearchTitle } from './serviceSearch';
 import type { Language } from './i18n';
 
 export type ServiceParams = Promise<{ slug: string }>;
@@ -15,12 +16,10 @@ export async function serviceMetadata(params: ServiceParams, lang: Language): Pr
   const found = getServiceBySlug((await params).slug);
   if (!found) return {};
   const { service } = found;
+  // Titles/descriptions name the city and stay unique per page: see lib/serviceSearch.ts.
   return pageMetadata({
-    title: lang === 'EN' ? `${service.nameEn} at home` : `${service.nameFr} à domicile`,
-    description:
-      lang === 'EN'
-        ? `${service.shortEn} At home in Greater Montreal, by an OIIQ-licensed nurse.`
-        : `${service.shortFr} À domicile dans le Grand Montréal, par une infirmière membre de l’OIIQ.`,
+    title: serviceSearchTitle(service.slug, lang),
+    description: serviceSearchDescription(service.slug, lang),
     path: `/services/${service.slug}`,
     lang,
     image: SERVICE_PHOTOS[service.slug]?.src,
@@ -41,7 +40,7 @@ export async function ServiceLayout({ children, params, lang }: { children: Reac
         '@type': 'Service',
         '@id': `${url(`/services/${service.slug}`)}#service`,
         serviceType: en ? service.nameEn : service.nameFr,
-        name: en ? `${service.nameEn} at home` : `${service.nameFr} à domicile`,
+        name: serviceSearchTitle(service.slug, lang),
         description: en ? service.longEn : service.longFr,
         category: en ? category.nameEn : category.nameFr,
         url: url(`/services/${service.slug}`),

@@ -1,7 +1,7 @@
 // Run: npm test. Locale routing: French at the root, English under /en.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { englishRedirectFor, localeFromPath, localizePath, stripLocale } from './i18n.ts';
+import { englishRedirectFor, localeFromPath, localizePath, parseAcceptLanguage, stripLocale } from './i18n.ts';
 
 test('localeFromPath', () => {
   assert.equal(localeFromPath('/'), 'FR');
@@ -79,8 +79,10 @@ test('English browser is redirected to /en', () => {
 test('mixed list with French anywhere stays', () => {
   assert.equal(englishRedirectFor('/', '', null, UA, ['en-US', 'fr-CA']), null);
 });
-test('empty languages list keeps the old English-first behaviour', () => {
-  assert.equal(englishRedirectFor('/', '', null, UA, []), '/en');
+test('no language list (no Accept-Language header) never redirects', () => {
+  // Crawlers, curl and link previews send no Accept-Language: they must get the French URL.
+  assert.equal(englishRedirectFor('/', '', null, UA, []), null);
+  assert.equal(englishRedirectFor('/services/pansements', '', null, UA, parseAcceptLanguage(null)), null);
 });
 test('a language merely starting with "f" or containing "fr" is not French', () => {
   assert.equal(englishRedirectFor('/', '', null, UA, ['fi-FI']), '/en');
@@ -95,4 +97,31 @@ test('bots are still never redirected, whatever the language', () => {
 });
 test('already on English never redirects, even for an English browser', () => {
   assert.equal(englishRedirectFor('/en/faq', '', null, UA, ['en-US']), null);
+});
+
+// --- Server-side redirect input: the Accept-Language header -----------------
+test('parseAcceptLanguage orders by q and keeps ties in header order', () => {
+  assert.deepEqual(parseAcceptLanguage('en-US,en;q=0.9,fr;q=0.8'), ['en-US', 'en', 'fr']);
+  assert.deepEqual(parseAcceptLanguage('fr;q=0.5, en-CA'), ['en-CA', 'fr']);
+  assert.deepEqual(parseAcceptLanguage('fr-CA'), ['fr-CA']);
+});
+test('parseAcceptLanguage drops q=0, wildcard, blanks and junk', () => {
+  assert.deepEqual(parseAcceptLanguage('en, fr;q=0'), ['en'], 'q=0 means "not French"');
+  assert.deepEqual(parseAcceptLanguage('*'), []);
+  assert.deepEqual(parseAcceptLanguage(''), []);
+  assert.deepEqual(parseAcceptLanguage(undefined), []);
+  assert.deepEqual(parseAcceptLanguage('en;q=abc, es'), ['es']);
+});
+test('header -> decision: the cases the proxy sees', () => {
+  const go = (h: string | null, ua = UA, saved: string | null = null, path = '/') =>
+    englishRedirectFor(path, '', saved, ua, parseAcceptLanguage(h));
+  assert.equal(go('en-US,en;q=0.9'), '/en', 'English Chrome');
+  assert.equal(go('en-CA,en;q=0.9,fr-CA;q=0.8'), null, 'bilingual Montrealer with French listed stays');
+  assert.equal(go('fr-CA,fr;q=0.9,en;q=0.8'), null, 'French browser stays');
+  assert.equal(go('en, fr;q=0'), '/en', 'French explicitly refused');
+  assert.equal(go(null), null, 'no header (crawler/curl)');
+  assert.equal(go('en-US', 'Mozilla/5.0 (compatible; Google-InspectionTool/1.0;)'), null, 'Search Console live test');
+  assert.equal(go('en-US', 'Mozilla/5.0 (compatible; bingbot/2.0)'), null);
+  assert.equal(go('en-US', UA, 'FR'), null, 'chose French with the switcher');
+  assert.equal(go('en-US', UA, null, '/services/prise-sang-labo'), '/en/services/prise-sang-labo');
 });
