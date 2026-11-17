@@ -19,6 +19,20 @@
   status = 301
   force = true
 
+# Old PHP site addresses still in Google's index (Search Console: 404s first
+# seen 2026-10-13). Send them, and any value their links carry, to the new pages.
+[[redirects]]
+  from = "/index_fr.php"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/index_en.php"
+  to = "/en"
+  status = 301
+  force = true
+
 [[headers]]
   for = "/*"
   [headers.values]
