@@ -3,8 +3,14 @@
 import React, { createContext, useContext, useEffect } from 'react';
 import type { ReactNode } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
-import { englishRedirectFor, localeFromPath, localizePath, stripLocale } from '../lib/i18n';
+import { LANG_COOKIE, LANG_COOKIE_MAX_AGE, localeFromPath, localizePath, stripLocale } from '../lib/i18n';
 import type { Language } from '../lib/i18n';
+
+/** Remember the switcher choice where the server-side redirect (src/proxy.ts) can read it. */
+const writeLanguageCookie = (lang: Language) => {
+  const secure = window.location.protocol === 'https:' ? '; Secure' : '';
+  document.cookie = `${LANG_COOKIE}=${lang}; Path=/; Max-Age=${LANG_COOKIE_MAX_AGE}; SameSite=Lax${secure}`;
+};
 
 interface LanguageContextType {
   language: Language;
@@ -33,23 +39,19 @@ export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) 
   const router = useRouter();
   const language: Language = localeFromPath(pathname);
 
-  // English-first for non-French browsers: a first-time visitor on a French URL
-  // whose browser lists no French language is sent to the English twin. Runs
-  // once on load; a saved choice from the switcher always wins.
+  // The browser-language redirect happens on the server (src/proxy.ts), before
+  // the page loads. It reads the switcher choice from a cookie; visitors who
+  // chose before the cookie existed only have it in localStorage, so copy it once.
   useEffect(() => {
-    let saved: string | null = null;
     try {
-      saved = localStorage.getItem('language');
+      const saved = localStorage.getItem('language');
+      if ((saved === 'FR' || saved === 'EN') && !document.cookie.split('; ').some((c) => c.startsWith(`${LANG_COOKIE}=`))) {
+        writeLanguageCookie(saved);
+        console.info(`[i18n] migrated saved language ${saved} to the ${LANG_COOKIE} cookie`);
+      }
     } catch (err) {
-      console.error('[i18n] could not read language preference', err);
+      console.error('[i18n] could not migrate language preference', err);
     }
-    const languages: readonly string[] = navigator.languages?.length ? navigator.languages : [navigator.language];
-    const target = englishRedirectFor(pathname, window.location.hash, saved, navigator.userAgent, languages);
-    if (target) {
-      console.info(`[i18n] first visit: ${pathname} -> ${target} (browser languages: ${languages.join(', ')})`);
-      router.replace(target);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -62,6 +64,11 @@ export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) 
       localStorage.setItem('language', lang);
     } catch (err) {
       console.error('[i18n] could not store language preference', err);
+    }
+    try {
+      writeLanguageCookie(lang);
+    } catch (err) {
+      console.error('[i18n] could not store language cookie', err);
     }
     router.push(localizePath(stripLocale(pathname) + window.location.hash, lang));
   };

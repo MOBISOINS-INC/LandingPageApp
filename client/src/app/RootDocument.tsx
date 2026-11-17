@@ -4,6 +4,11 @@ import { LanguageProvider } from '../contexts/LanguageContext';
 import './globals.css';
 import { DEFAULT_IMAGE, SITE_NAME, SITE_URL, jsonLd, languageAlternates, verificationMetadata } from '../lib/seo';
 import { HOME_DESCRIPTION, ORGANIZATION_LD } from '../lib/organizationLd';
+import { PLAUSIBLE_STUB, analyticsConfig } from '../lib/analytics';
+
+// Cookieless visitor analytics; undefined (nothing loads) until the Netlify env vars are set.
+const ANALYTICS = analyticsConfig(process.env);
+console.info(ANALYTICS ? `[analytics] Plausible on for ${ANALYTICS.domain} (${ANALYTICS.src})` : '[analytics] off: NEXT_PUBLIC_PLAUSIBLE_DOMAIN is not set');
 
 // Body/heading face. Self-hosted by next/font so it is no longer a render-blocking
 // stylesheet from fonts.googleapis.com (globals.css reads it as var(--font-inter)).
@@ -86,6 +91,12 @@ export function RootDocument({ lang, children }: { lang: HtmlLang; children: Rea
       <head>
         <link rel="preconnect" href="https://api.web3forms.com" crossOrigin="" />
         <link rel="preconnect" href="https://images.unsplash.com" crossOrigin="" />
+        {ANALYTICS && (
+          <>
+            <script dangerouslySetInnerHTML={{ __html: PLAUSIBLE_STUB }} />
+            <script defer data-domain={ANALYTICS.domain} src={ANALYTICS.src} />
+          </>
+        )}
       </head>
       <body style={{ background: '#ffffff' }}>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(ORGANIZATION_LD) }} />

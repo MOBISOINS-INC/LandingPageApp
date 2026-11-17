@@ -11,28 +11,28 @@ const PAGES = {
   },
   apropos: {
     path: '/apropos',
-    FR: ['À propos', 'Qui est derrière MobiSoins : une équipe québécoise qui prépare des soins infirmiers à domicile offerts par des infirmières membres de l’OIIQ.'],
-    EN: ['About Us', 'Who is behind MobiSoins: a Quebec team preparing home nursing care delivered by OIIQ-licensed nurses in Greater Montreal.'],
+    FR: ['À propos : soins infirmiers à domicile à Montréal', 'Qui est derrière MobiSoins : une équipe québécoise qui prépare des soins infirmiers à domicile à Montréal, Laval et Longueuil, par des infirmières de l’OIIQ.'],
+    EN: ['About Us: Home Nursing in Montreal', 'Who is behind MobiSoins: a Quebec team preparing home nursing care in Montreal, Laval and Longueuil, delivered by OIIQ-licensed nurses.'],
   },
   contact: {
     path: '/contact',
-    FR: ['Contact', 'Une question sur MobiSoins, un partenariat ou les soins à domicile ? Écrivez à notre équipe, nous vous répondons rapidement.'],
-    EN: ['Contact', 'A question about MobiSoins, a partnership or home nursing care? Write to our team and we will get back to you quickly.'],
+    FR: ['Contact : infirmière à domicile à Montréal', 'Une question sur les soins infirmiers à domicile à Montréal, Laval ou Longueuil, ou un partenariat ? Écrivez à l’équipe MobiSoins.'],
+    EN: ['Contact: Home Nurse in Montreal', 'A question about home nursing care in Montreal, Laval or Longueuil, or a partnership? Write to the MobiSoins team.'],
   },
   faq: {
     path: '/faq',
-    FR: ['Questions fréquentes', 'Réservation, infirmières OIIQ, secteurs desservis, reçus d’assurance, confidentialité : les réponses aux questions fréquentes sur MobiSoins.'],
-    EN: ['Frequently Asked Questions', 'Booking, OIIQ nurses, service areas, insurance receipts, privacy: answers to the most common questions about MobiSoins home nursing.'],
+    FR: ['Questions fréquentes : soins à domicile à Montréal', 'Réservation, infirmières OIIQ, secteurs desservis (Montréal, Laval, Longueuil), reçus d’assurance : les réponses aux questions fréquentes.'],
+    EN: ['FAQ: Home Nursing Care in Montreal', 'Booking, OIIQ nurses, service areas (Montreal, Laval, Longueuil), insurance receipts: answers to common questions about MobiSoins.'],
   },
   services: {
     path: '/services',
-    FR: ['Services de soins infirmiers à domicile', 'Prises de sang, pansements, vaccins, suivi du diabète et de la tension, soins aux aînés et services aux entreprises, à domicile dans le Grand Montréal.'],
-    EN: ['Home Nursing Services', 'Blood draws, dressings, vaccines, diabetes and blood-pressure follow-up, senior care and corporate services, at home in Greater Montreal.'],
+    FR: ['Tous nos services infirmiers à domicile à Montréal', 'Prises de sang, pansements, vaccins, suivi du diabète et de la tension, soins aux aînés : à domicile à Montréal, Laval et Longueuil.'],
+    EN: ['All Our Home Nursing Services in Montreal', 'Blood draws, dressings, vaccines, diabetes and blood-pressure follow-up, senior care: at home in Montreal, Laval and Longueuil.'],
   },
   articles: {
     path: '/articles',
-    FR: ['Articles et guides santé', 'Guides pratiques sur les soins infirmiers à domicile, la télésanté et le soutien aux aînés au Québec, rédigés par l’équipe MobiSoins.'],
-    EN: ['Health Articles and Guides', 'Practical guides on home nursing care, telehealth and supporting seniors in Quebec, written by the MobiSoins team.'],
+    FR: ['Articles et guides santé à domicile au Québec', 'Guides pratiques sur les soins infirmiers à domicile à Montréal et au Québec, la télésanté et le soutien aux aînés, par l’équipe MobiSoins.'],
+    EN: ['Home Health Articles and Guides, Quebec', 'Practical guides on home nursing care in Montreal and Quebec, telehealth and supporting seniors, written by the MobiSoins team.'],
   },
   confidentialite: {
     path: '/confidentialite',
