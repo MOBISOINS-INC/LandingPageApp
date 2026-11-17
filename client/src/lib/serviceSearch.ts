@@ -14,7 +14,7 @@ import type { Language } from './i18n.ts';
 /** City in every service title: the main search term after the service itself. */
 export const TITLE_CITY = { FR: 'Montréal', EN: 'Montreal' } as const;
 
-/** Launch area, as named in descriptions. Keep in step with SERVED_CITIES in organizationLd.ts. */
+/** The three launch cities named in service descriptions (all served areas: data/cities.ts). */
 export const AREA_PHRASE = { FR: 'Montréal, Laval et Longueuil', EN: 'Montreal, Laval and Longueuil' } as const;
 
 /** Google cuts meta descriptions around 155-160 characters. */

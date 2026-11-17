@@ -175,8 +175,8 @@ const translations = {
     },
     hero: {
       availableInQuebec: 'Disponible au Québec',
-      title: 'Une infirmière chez vous',
-      titleHighlight: 'en quelques minutes',
+      title: 'Une infirmière à domicile',
+      titleHighlight: 'à Montréal',
       subtitle: 'Des infirmières autorisées, réservées en quelques clics. Professionnel, sécurisé, disponible 24/7.',
       subtitleShort: 'Des infirmières autorisées, réservées en quelques clics.',
       bookNow: 'Rejoindre la liste d\'attente',
@@ -684,8 +684,8 @@ const translations = {
     },
     hero: {
       availableInQuebec: 'Available in Quebec',
-      title: 'A nurse at your door',
-      titleHighlight: 'in minutes',
+      title: 'A home care nurse',
+      titleHighlight: 'in Montreal',
       subtitle: 'Licensed nurses, booked in a few taps. Professional, secure, available 24/7.',
       subtitleShort: 'Licensed nurses, booked in a few taps.',
       bookNow: 'Join Waitlist',

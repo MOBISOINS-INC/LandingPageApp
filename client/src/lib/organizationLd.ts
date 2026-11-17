@@ -6,6 +6,7 @@
  * Contact facts mirror the contact page (src/components/sections/Contact.tsx).
  */
 import { DEFAULT_IMAGE, SITE_NAME, SITE_URL, absoluteUrl } from './seo.ts';
+import { CITIES } from '../data/cities.ts';
 
 export const HOME_DESCRIPTION =
   'Soins infirmiers à domicile au Québec par des infirmières membres de l’OIIQ. Lancement à Montréal, Laval et Longueuil. Inscrivez-vous à la liste d’attente.';
@@ -26,8 +27,11 @@ export const POSTAL_ADDRESS = {
   addressCountry: 'CA',
 } as const;
 
-/** Launch area only. Québec City, Gatineau and Sherbrooke are waitlist cities, not served yet. */
-export const SERVED_CITIES = ['Montréal', 'Laval', 'Longueuil'] as const;
+/**
+ * Every municipality with a service-area page (data/cities.ts), as schema City
+ * names. Québec City, Gatineau and Sherbrooke are waitlist cities, not served yet.
+ */
+export const SERVED_CITIES: string[] = CITIES.flatMap((c) => c.municipalities ?? [c.nameFr]);
 
 export const AREA_SERVED = SERVED_CITIES.map((name) => ({
   '@type': 'City',
