@@ -1,35 +1,23 @@
 'use client';
 
-import { useEffect } from 'react';
 import { useLanguage } from '../../contexts/LanguageContext';
 import { GetTheAppLink } from '../ui/GetTheApp';
-import { LAUNCH_BANNER_ATTR, launchBannerMsLeft } from '../../lib/launchBanner';
-
-const hide = (why: string) => {
-  document.documentElement.setAttribute(LAUNCH_BANNER_ATTR, 'off');
-  console.info(`[launch-banner] hidden (${why})`);
-};
+import { LAUNCH_BANNER_ATTR } from '../../lib/launchBanner';
 
 /**
  * Thin launch bar at the very top of the fixed header: "MobiSoins est maintenant
- * sur l'App Store et Google Play". Shows on every page load, then slides away
- * after a minute (lib/launchBanner.ts); the × closes it sooner. Nothing is stored,
- * so a refresh brings it back. The clock is the page load (performance.timeOrigin),
- * not this component: the header remounts on each page, and moving between pages
- * must not restart the minute.
+ * sur l'App Store et Google Play". Owner's rule (2026-11-19, "very important"):
+ * it NEVER leaves on its own — no timer. It stays the whole visit; only the ×
+ * closes it, for this page view (nothing is stored, a refresh brings it back).
+ * Guarded by lib/launchBanner.test.ts.
  */
 export const LaunchBanner = () => {
   const { t } = useLanguage();
 
-  useEffect(() => {
-    const left = launchBannerMsLeft(performance.timeOrigin, Date.now());
-    if (left === 0) {
-      hide('time up');
-      return;
-    }
-    const timer = window.setTimeout(() => hide('time up'), left);
-    return () => window.clearTimeout(timer);
-  }, []);
+  const close = () => {
+    document.documentElement.setAttribute(LAUNCH_BANNER_ATTR, 'off');
+    console.info('[launch-banner] closed by the visitor');
+  };
 
   return (
     <div className="launch-banner relative flex h-[var(--launch-banner-h)] items-center justify-center overflow-hidden bg-leaf-on-dark pl-4 pr-12 text-ink-deep">
@@ -43,7 +31,7 @@ export const LaunchBanner = () => {
       </p>
       <button
         type="button"
-        onClick={() => hide('closed')}
+        onClick={close}
         aria-label={t('hero.launchBannerClose')}
         className="absolute right-0 top-0 flex h-full w-11 items-center justify-center text-ink-deep hover:text-ink"
       >

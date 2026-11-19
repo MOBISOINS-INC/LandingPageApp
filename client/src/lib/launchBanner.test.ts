@@ -1,27 +1,25 @@
-// Run: npm test. The launch banner shows on every load, then leaves by itself after a minute.
+// Run: npm test. Owner's rule (2026-11-19, "very important"): the green launch banner
+// NEVER leaves on its own. It stays the whole visit; only the × closes it (until refresh).
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { LAUNCH_BANNER_MS, launchBannerMsLeft } from './launchBanner.ts';
+import { readFileSync } from 'node:fs';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { LAUNCH_BANNER_ATTR } from './launchBanner.ts';
 
-test('visible for about a minute', () => {
-  assert.equal(LAUNCH_BANNER_MS, 60_000);
+const SRC = join(dirname(fileURLToPath(import.meta.url)), '..');
+const banner = readFileSync(join(SRC, 'components/layout/LaunchBanner.tsx'), 'utf8');
+const css = readFileSync(join(SRC, 'app/globals.css'), 'utf8');
+
+test('the banner has no timer: nothing hides it after a minute (or two)', () => {
+  assert.doesNotMatch(banner, /setTimeout|setInterval|launchBannerMsLeft|timeOrigin/);
+  assert.doesNotMatch(css, /launch-banner[^{]*\{[^}]*animation/, 'no CSS animation that could fade it out');
 });
 
-test('fresh load → full minute left', () => {
-  assert.equal(launchBannerMsLeft(1_000, 1_000), 60_000);
-});
-
-test('part way through → the rest of the minute (page changes keep the same clock)', () => {
-  assert.equal(launchBannerMsLeft(0, 45_000), 15_000);
-});
-
-test('exactly at, and past, the minute → 0 (hidden, never negative)', () => {
-  assert.equal(launchBannerMsLeft(0, 60_000), 0);
-  assert.equal(launchBannerMsLeft(0, 10 * 60_000), 0);
-});
-
-test('clock oddities: now before load (clock moved back) is capped at a minute; bad numbers hide it', () => {
-  assert.equal(launchBannerMsLeft(10_000, 0), 60_000);
-  assert.equal(launchBannerMsLeft(NaN, 5), 0);
-  assert.equal(launchBannerMsLeft(0, Infinity), 0);
+test('the only way it hides is the × button (this page view only)', () => {
+  const hides = banner.match(/setAttribute\(LAUNCH_BANNER_ATTR, 'off'\)/g) ?? [];
+  assert.equal(hides.length, 1);
+  assert.match(banner, /onClick=\{close\}/);
+  assert.doesNotMatch(banner, /localStorage|sessionStorage|cookie/, 'nothing remembered: a refresh brings it back');
+  assert.equal(LAUNCH_BANNER_ATTR, 'data-launch-banner');
 });
