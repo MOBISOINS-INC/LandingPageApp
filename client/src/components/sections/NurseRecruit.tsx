@@ -4,9 +4,7 @@ import Image from 'next/image';
 import { useLanguage } from '../../contexts/LanguageContext';
 import { useReveal } from '../../hooks/useReveal';
 import { ArrowRight, DISPLAY, Eyebrow } from '../ui/editorial';
-
-const NURSE_FORM =
-  'https://docs.google.com/forms/d/1TaBNJ9M7Ks6LW5_Vfyqx5DodEPQZbo06bxX8PvJFLiw/viewform';
+import { GetTheAppLink } from '../ui/GetTheApp';
 
 // Nurse recruitment — previously a dark card tucked under the services list.
 export const NurseRecruit = () => {
@@ -26,15 +24,13 @@ export const NurseRecruit = () => {
             <h2 className={`${DISPLAY} text-[34px] leading-[1.1] lg:text-[50px] lg:leading-[1.08]`}>
               {t('v2.nursesPitch')}
             </h2>
-            <a
-              href={NURSE_FORM}
-              target="_blank"
-              rel="noopener noreferrer"
+            <GetTheAppLink
               className="inline-flex h-11 self-center items-center lg:self-start justify-center gap-2.5 rounded border border-ink px-5 text-[15px] font-semibold text-ink lg:h-[54px] lg:gap-3 lg:px-[26px] lg:text-[16px] transition-colors hover:bg-ink hover:text-white"
             >
               {t('v2.nursesCta')}
               <ArrowRight />
-            </a>
+            </GetTheAppLink>
+            <p className="-mt-2 text-[14px] text-ink-soft lg:-mt-3">{t('v2.nursesHint')}</p>
           </div>
           <Image
             src="/about/story.jpg"

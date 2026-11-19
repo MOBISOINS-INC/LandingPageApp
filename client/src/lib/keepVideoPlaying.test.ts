@@ -57,7 +57,7 @@ class FakeVideo extends Target {
   }
 }
 
-function setup(over: { visible?: boolean; reduce?: boolean; blocked?: boolean; mobile?: boolean } = {}) {
+function setup(over: { visible?: boolean; reduce?: boolean; blocked?: boolean; mobile?: boolean; fallback?: boolean } = {}) {
   const v = new FakeVideo();
   v.blocked = !!over.blocked;
   const doc = Object.assign(new Target(), { visibilityState: over.visible === false ? 'hidden' : 'visible' });
@@ -69,16 +69,21 @@ function setup(over: { visible?: boolean; reduce?: boolean; blocked?: boolean; m
     matchMedia: () => mq,
   });
   const logs: string[] = [];
+  const states: string[] = [];
   const dispose = keepVideoPlaying(v as unknown as HTMLVideoElement, {
     reduceMotion: !!over.reduce,
     sourceQuery: '(max-width: 640px)',
     stallMs: 0,
-    pickSource: () => (mq.matches ? { src: '/m.mp4', poster: '/m.jpg' } : { src: '/d.mp4', poster: '/d.jpg' }),
+    pickSource: () =>
+      mq.matches
+        ? { src: '/m.mp4', poster: '/m.jpg' }
+        : { src: '/d.mp4', poster: '/d.jpg', ...(over.fallback ? { fallback: '/d-h264.mp4' } : {}) },
+    onState: (st) => states.push(st),
     log: (level, msg) => logs.push(`${level}:${msg}`),
     win: win as unknown as Window,
     doc: doc as unknown as Document,
   });
-  return { v, doc, win, mq, logs, dispose, tick: () => tick() };
+  return { v, doc, win, mq, logs, states, dispose, tick: () => tick() };
 }
 const flush = () => new Promise((r) => setImmediate(r));
 
@@ -246,4 +251,99 @@ test('buffering that stops receiving data is still recovered', async () => {
   tick(); // no progress, no clock movement -> genuinely stuck
   assert.equal(v.loadCalls, 1);
   assert.ok(logs.some((l) => l.startsWith('warn:stalled')));
+});
+
+// ── Refused autoplay (in-app browsers, Low Power Mode): the page must know, so it
+//    can show the moving still instead of a frozen first frame. ──
+
+test('autoplay refused → reports "blocked" (page shows the living still), then "playing" once a tap starts it', async () => {
+  const { v, doc, states } = setup({ blocked: true });
+  await flush();
+  assert.deepEqual(states, ['blocked']);
+  v.blocked = false;
+  doc.emit('touchend');
+  await flush();
+  v.emit('playing'); // the browser fires this when frames actually move
+  assert.equal(states.at(-1), 'playing');
+});
+
+test('normal autoplay reports "playing" and never "blocked"', async () => {
+  const { v, states } = setup();
+  await flush();
+  v.emit('playing');
+  assert.deepEqual(states, ['playing']);
+});
+
+test('reduced motion reports "blocked" so the still is shown (and it never plays)', async () => {
+  const { v, states } = setup({ reduce: true });
+  await flush();
+  assert.ok(states.includes('blocked'));
+  assert.equal(v.playCalls, 0);
+});
+
+test('iOS WebView throws the video fullscreen on tap → exit fullscreen, pause, never call play() again', async () => {
+  const { v, doc, states, tick, logs } = setup({ blocked: true });
+  await flush();
+  let exited = 0;
+  (v as unknown as { webkitExitFullscreen: () => void }).webkitExitFullscreen = () => { exited++; };
+  v.blocked = false;
+  doc.emit('touchend'); // tap → play() → WebView goes fullscreen
+  await flush();
+  v.emit('webkitbeginfullscreen');
+  assert.equal(exited, 1);
+  assert.equal(v.paused, true);
+  assert.equal(states.at(-1), 'blocked');
+  assert.ok(logs.some((l) => l.includes('inline playback refused')));
+  const calls = v.playCalls;
+  doc.emit('touchend');
+  v.emit('pause');
+  tick(); tick();
+  await flush();
+  assert.equal(v.playCalls, calls, 'no more play() after a fullscreen takeover');
+});
+
+test('preferred codec fails to decode → falls back to the H.264 file once, and plays', async () => {
+  const { v, logs } = setup({ fallback: true });
+  await flush();
+  assert.equal(v.src, '/d.mp4');
+  v.currentSrc = 'https://site.test/d.mp4';
+  v.paused = true;
+  v.emit('error');
+  await flush();
+  assert.equal(v.src, '/d-h264.mp4');
+  assert.equal(v.paused, false);
+  assert.ok(logs.some((l) => l.includes('falling back to /d-h264.mp4')));
+  // A later error on the fallback does not loop back.
+  v.currentSrc = 'https://site.test/d-h264.mp4';
+  v.emit('error');
+  assert.equal(v.src, '/d-h264.mp4');
+});
+
+test('fallback file chosen natively from <source> is left alone (no reload)', async () => {
+  const { v } = setup({ fallback: true });
+  v.src = '';
+  v.currentSrc = 'https://site.test/d-h264.mp4';
+  v.paused = false;
+  v.emit('canplay');
+  await flush();
+  assert.equal(v.src, '', 'kept the natively chosen fallback');
+});
+
+test('video autoplayed natively before the script loaded → "playing" is reported on mount', async () => {
+  const v = new FakeVideo();
+  v.currentSrc = 'https://site.test/d.mp4';
+  v.paused = false;
+  v.readyState = 4;
+  const doc = Object.assign(new Target(), { visibilityState: 'visible' });
+  const win = Object.assign(new Target(), { setInterval: () => 1, clearInterval: () => {}, matchMedia: () => undefined });
+  const states: string[] = [];
+  keepVideoPlaying(v as unknown as HTMLVideoElement, {
+    reduceMotion: false,
+    pickSource: () => ({ src: '/d.mp4' }),
+    onState: (st) => states.push(st),
+    log: () => {},
+    win: win as unknown as Window,
+    doc: doc as unknown as Document,
+  });
+  assert.deepEqual(states, ['playing']);
 });

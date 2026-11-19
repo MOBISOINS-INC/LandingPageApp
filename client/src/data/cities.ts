@@ -10,7 +10,7 @@
  * well-established names; when in doubt, none are listed.
  *
  * General, factual wording only: no prices, no wait-time promises, no clinic
- * names. Launch status matches the site FAQ (Greater Montreal first, waitlist).
+ * names. Booking is open in all of them (site FAQ); other cities use the out-of-area email form.
  */
 
 export interface City {

@@ -6,12 +6,13 @@ import { Footer } from './Footer';
 
 /**
  * Shared shell for every inner page. Same white ground as the home page; the
- * top padding clears the fixed header (h-16 on mobile, h-24 on desktop).
+ * top padding clears the fixed header (h-16 on mobile, h-24 on desktop) plus the
+ * launch banner on top of it (--launch-banner-h, 0 once closed).
  */
 export const PageShell = ({ children }: { children: ReactNode }) => (
   <div className="min-h-screen flex flex-col bg-white">
     <Header />
-    <main className="flex-grow pt-16 md:pt-24">{children}</main>
+    <main className="flex-grow pt-[calc(4rem+var(--launch-banner-h))] md:pt-[calc(6rem+var(--launch-banner-h))]">{children}</main>
     <Footer />
   </div>
 );

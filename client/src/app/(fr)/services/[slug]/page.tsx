@@ -10,9 +10,8 @@ import { SERVICE_DETAILS } from '@/data/serviceDetails';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useScrollMotion } from '@/hooks/useScrollMotion';
 import { ArrowRight, DISPLAY, Eyebrow } from '@/components/ui/editorial';
+import { StoreBadges } from '@/components/ui/StoreBadges';
 
-const WAITLIST_URL =
-  'https://docs.google.com/forms/d/1TaBNJ9M7Ks6LW5_Vfyqx5DodEPQZbo06bxX8PvJFLiw/viewform';
 
 const COPY = {
   FR: {
@@ -28,7 +27,7 @@ const COPY = {
     ],
     reassure: ['Infirmières certifiées OIIQ', 'À domicile', 'Environ 30 minutes'],
     ctaTitle: 'Besoin de ce soin à la maison ?',
-    ctaButton: 'Rejoindre la liste d’attente',
+    ctaButton: 'Télécharger l’app',
     related: 'Autres soins dans cette catégorie',
     notFound: 'Ce service est introuvable.',
     notFoundCta: 'Voir tous les services',
@@ -55,7 +54,7 @@ const COPY = {
     ],
     reassure: ['OIIQ-certified nurses', 'At home', 'About 30 minutes'],
     ctaTitle: 'Need this care at home?',
-    ctaButton: 'Join the waiting list',
+    ctaButton: 'Download the app',
     related: 'Other services in this category',
     notFound: 'This service could not be found.',
     notFoundCta: 'View all services',
@@ -252,17 +251,7 @@ function ServiceBody({
                 </li>
               ))}
             </ul>
-            <a
-              href={WAITLIST_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group inline-flex h-14 items-center justify-center gap-3 rounded bg-ink px-7 text-[16px] font-semibold text-white transition-colors hover:bg-ink-deep"
-            >
-              {c.ctaButton}
-              <span className="transition-transform duration-300 group-hover:translate-x-1">
-                <ArrowRight />
-              </span>
-            </a>
+            <StoreBadges size="md" onDark={false} />
             <p className="text-[13px] leading-[1.6] text-ink-soft">{c.insurance}</p>
           </aside>
         </div>
@@ -396,16 +385,9 @@ function ServiceBody({
                 {c.ctaTitle}
               </h2>
             </div>
-            <a
-              href={WAITLIST_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex h-14 items-center justify-center gap-3 rounded bg-white px-7 text-[16px] font-semibold text-ink transition-colors hover:bg-leaf-on-dark hover:text-ink-deep"
-              style={cta.rise(1, 0.15)}
-            >
-              {c.ctaButton}
-              <ArrowRight />
-            </a>
+            <div style={cta.rise(1, 0.15)}>
+              <StoreBadges size="md" className="lg:justify-start" />
+            </div>
           </div>
         </div>
       </section>
