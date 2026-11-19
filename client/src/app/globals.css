@@ -312,3 +312,40 @@
 
 /* Phones: skip the drifting blur animation, it is expensive on low-end GPUs */
 @media (max-width: 767px) { .aurora { animation: none; } }
+
+/* ── Launch banner (components/layout/LaunchBanner.tsx) ──
+   Fixed height so inner pages can clear it (PageShell). After a minute (or the
+   close button) <html data-launch-banner="off"> slides it shut: the height and
+   the page offset animate to 0 together, then it is hidden from tab order. */
+@property --launch-banner-h { syntax: '<length>'; inherits: true; initial-value: 2.5rem; }
+:root { --launch-banner-h: 2.5rem; transition: --launch-banner-h 0.5s cubic-bezier(0.32, 0.72, 0, 1); }
+:root[data-launch-banner="off"] { --launch-banner-h: 0px; }
+.launch-banner { transition: opacity 0.3s ease; }
+:root[data-launch-banner="off"] .launch-banner { opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0s linear 0.5s; }
+@media (prefers-reduced-motion: reduce) { :root, .launch-banner { transition: none; } }
+
+/* ── "Télécharger l'app" QR dialog (components/ui/GetTheApp.tsx) ── */
+dialog.get-the-app[open] { animation: get-app-in 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
+dialog.get-the-app[open]::backdrop { animation: get-app-fade 0.35s ease; }
+@keyframes get-app-in { from { opacity: 0; transform: translateY(12px) scale(0.98); } to { opacity: 1; transform: none; } }
+@keyframes get-app-fade { from { opacity: 0; } to { opacity: 1; } }
+html:has(dialog.get-the-app[open]) { overflow: hidden; }
+@media (prefers-reduced-motion: reduce) { dialog.get-the-app[open], dialog.get-the-app[open]::backdrop { animation: none; } }
+
+/* ── Hero film over a living still (components/sections/Hero.tsx) ──
+   The film is see-through until it really plays, then fades in over the still.
+   Where autoplay is refused (in-app browsers, Low Power Mode, Data Saver) the
+   still keeps a slow drift so the hero never looks frozen and never needs a tap.
+   Transform-only animation: composited, cheap, runs in Low Power Mode. */
+.hero-video { opacity: 0; transition: opacity 0.8s ease; }
+section[data-hero-mode="playing"] .hero-video { opacity: 1; }
+.hero-still img { transform-origin: 58% 38%; animation: hero-drift 16s ease-in-out infinite alternate; will-change: transform; }
+section[data-hero-mode="playing"] .hero-still img { animation-play-state: paused; }
+@keyframes hero-drift {
+  from { transform: scale(1) translate3d(0, 0, 0); }
+  to   { transform: scale(1.09) translate3d(-1.2%, -0.8%, 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-still img { animation: none; }
+  .hero-video { transition: none; }
+}

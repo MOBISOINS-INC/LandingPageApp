@@ -6,9 +6,8 @@ import { useLanguage } from '../../contexts/LanguageContext';
 import { panelPose, usePinnedSteps } from '../../hooks/usePinnedSteps';
 import { ArrowRight, Eyebrow } from '../ui/editorial';
 import { JourneyFigure } from './JourneyFigure';
+import { StoreBadges } from '../ui/StoreBadges';
 
-const WAITLIST_URL =
-  'https://docs.google.com/forms/d/1TaBNJ9M7Ks6LW5_Vfyqx5DodEPQZbo06bxX8PvJFLiw/viewform';
 
 // The journey, as a navy band of four milestones. On desktop the band pins to
 // the viewport and vertical scroll pans the track right, one milestone per
@@ -68,15 +67,7 @@ const StepBody = ({ n, pinned }: { n: number; pinned: boolean }) => {
           <JourneyFigure n={n} className="mt-5 w-[190px] text-leaf-on-dark lg:hidden" />
         )}
         {n === 3 && (
-          <a
-            href={WAITLIST_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-2 inline-flex h-11 items-center gap-3 self-start rounded bg-white px-5 text-[14px] lg:h-12 lg:px-6 lg:text-[15px] font-semibold text-ink transition-colors hover:bg-leaf-on-dark hover:text-ink-deep"
-          >
-            {t('about.journeyCta')}
-            <ArrowRight />
-          </a>
+          <StoreBadges size="sm" className="mt-2" />
         )}
       </div>
     </>

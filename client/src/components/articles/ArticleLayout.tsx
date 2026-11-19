@@ -11,9 +11,8 @@ import { useReveal } from '../../hooks/useReveal';
 import { ARTICLE_INDEX, relatedArticles } from '../../data/articleIndex';
 import { SITE_URL, absoluteUrl, jsonLd } from '../../lib/seo';
 import { localizePath } from '../../lib/i18n';
+import { StoreBadges } from '../ui/StoreBadges';
 
-const WAITLIST_URL =
-  'https://docs.google.com/forms/d/1TaBNJ9M7Ks6LW5_Vfyqx5DodEPQZbo06bxX8PvJFLiw/viewform';
 
 export interface ArticleLink {
   label: string;
@@ -85,11 +84,11 @@ const COPY = {
     all: 'Tous les articles',
     read: 'de lecture',
     services: 'Services liés',
-    ctaEyebrow: 'Liste d’attente ouverte',
+    ctaEyebrow: 'Maintenant offert dans le Grand Montréal',
     ctaTitle: 'Des soins infirmiers, directement chez vous.',
     ctaBody:
-      'MobiSoins prépare ses premières visites au Québec. Inscrivez-vous : vous serez parmi les premiers à réserver une infirmière membre de l’OIIQ à domicile.',
-    ctaButton: 'Rejoindre la liste d’attente',
+      'Téléchargez l’app MobiSoins et réservez en quelques minutes une infirmière membre de l’OIIQ, chez vous.',
+    ctaButton: 'Télécharger l’app',
     disclaimer:
       'Cet article est fourni à titre informatif et ne remplace pas l’avis d’un professionnel de la santé. En cas d’urgence, composez le 911 ; pour une question de santé non urgente, Info-Santé 811.',
     rights: 'Tous droits réservés.',
@@ -104,11 +103,11 @@ const COPY = {
     all: 'All articles',
     read: 'read',
     services: 'Related services',
-    ctaEyebrow: 'Waitlist now open',
+    ctaEyebrow: 'Now available in Greater Montreal',
     ctaTitle: 'Nursing care, delivered to your door.',
     ctaBody:
-      'MobiSoins is preparing its first visits in Quebec. Sign up and be among the first to book an OIIQ-registered nurse at home.',
-    ctaButton: 'Join the waitlist',
+      'Download the MobiSoins app and book an OIIQ-registered nurse at home in a few minutes.',
+    ctaButton: 'Download the app',
     disclaimer:
       'This article is for information only and does not replace advice from a health professional. In an emergency, call 911; for a non-urgent health question, call Info-Santé 811.',
     rights: 'All rights reserved.',
@@ -143,22 +142,14 @@ const useActiveSection = (count: number) => {
   return active;
 };
 
-const WaitlistCta = ({ copy }: { copy: (typeof COPY)['FR' | 'EN'] }) => (
+const AppCta = ({ copy }: { copy: (typeof COPY)['FR' | 'EN'] }) => (
   <aside className="rounded-2xl bg-ink-deep p-7 sm:p-10">
     <Eyebrow onDark>{copy.ctaEyebrow}</Eyebrow>
     <p className="mt-4 font-display text-[28px] font-light leading-[1.12] tracking-[-0.02em] text-white sm:text-[36px]">
       {copy.ctaTitle}
     </p>
     <p className="mt-4 max-w-[520px] text-[15px] leading-[1.65] text-white/80 sm:text-[16px]">{copy.ctaBody}</p>
-    <a
-      href={WAITLIST_URL}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="mt-7 inline-flex h-11 items-center gap-2.5 rounded bg-white px-5 text-[14.5px] lg:h-12 lg:gap-3 lg:px-6 lg:text-[15px] font-semibold text-ink transition-colors hover:bg-leaf-on-dark hover:text-ink-deep"
-    >
-      {copy.ctaButton}
-      <ArrowRight />
-    </a>
+    <StoreBadges size="md" className="mt-7" />
   </aside>
 );
 
@@ -380,7 +371,7 @@ export const ArticleLayout: React.FC<ArticleLayoutProps> = ({ article }) => {
                   {/* Mid-article CTA, once the reader is invested */}
                   {data.sections.length >= 5 && i === Math.floor(data.sections.length / 2) - 1 && (
                     <div className="mb-14">
-                      <WaitlistCta copy={copy} />
+                      <AppCta copy={copy} />
                     </div>
                   )}
                 </React.Fragment>
@@ -401,15 +392,7 @@ export const ArticleLayout: React.FC<ArticleLayoutProps> = ({ article }) => {
                     {paragraph}
                   </p>
                 ))}
-                <a
-                  href={WAITLIST_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-7 inline-flex h-11 items-center gap-2.5 rounded bg-white px-5 text-[14.5px] lg:h-12 lg:gap-3 lg:px-6 lg:text-[15px] font-semibold text-ink transition-colors hover:bg-leaf-on-dark hover:text-ink-deep"
-                >
-                  {copy.ctaButton}
-                  <ArrowRight />
-                </a>
+                <StoreBadges size="md" className="mt-7" />
               </section>
 
               {/* FAQ */}

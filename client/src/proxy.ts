@@ -50,5 +50,5 @@ export function proxy(request: NextRequest) {
 
 export const config = {
   // French pages only: skip /en, Next internals, the API and any file (x.png, sitemap.xml, robots.txt).
-  matcher: ['/((?!en(?:/|$)|_next/|api/|.*\\.[a-zA-Z0-9]{2,5}$).*)'],
+  matcher: ['/((?!en(?:/|$)|app(?:/|$)|_next/|api/|.*\\.[a-zA-Z0-9]{2,5}$).*)'],
 };

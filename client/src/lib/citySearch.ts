@@ -19,8 +19,8 @@ export function citySearchDescription(slug: string, lang: Language): string {
   if (!city) throw new Error(`citySearchDescription: unknown city "${slug}"`);
   return clampDescription(
     lang === 'EN'
-      ? `An OIIQ-licensed nurse at home ${city.inEn}: blood tests, dressings, vaccines, diabetes follow-up and senior care. Join the MobiSoins waitlist.`
-      : `Une infirmière membre de l’OIIQ à domicile ${city.inFr} : prises de sang, pansements, vaccins, suivi du diabète et soins aux aînés. Liste d’attente MobiSoins.`,
+      ? `An OIIQ-licensed nurse at home ${city.inEn}: blood tests, dressings, vaccines, diabetes follow-up and senior care. Book in the MobiSoins app.`
+      : `Une infirmière membre de l’OIIQ à domicile ${city.inFr} : prises de sang, pansements, vaccins, suivi du diabète et soins aux aînés. Réservez dans l’app MobiSoins.`,
   );
 }
 
@@ -30,6 +30,6 @@ export const CITY_HUB_TITLE = {
 } as const;
 
 export const CITY_HUB_DESCRIPTION = {
-  FR: clampDescription('Soins infirmiers à domicile à Montréal, Laval, Longueuil, sur la Rive-Sud et la Rive-Nord : trouvez votre ville et inscrivez-vous à la liste d’attente.'),
-  EN: clampDescription('Home nursing care in Montreal, Laval, Longueuil and on the South and North Shores: find your city and join the MobiSoins waitlist.'),
+  FR: clampDescription('Soins infirmiers à domicile à Montréal, Laval, Longueuil, sur la Rive-Sud et la Rive-Nord : trouvez votre ville et réservez dans l’app MobiSoins.'),
+  EN: clampDescription('Home nursing care in Montreal, Laval, Longueuil and on the South and North Shores: find your city and book in the MobiSoins app.'),
 } as const;

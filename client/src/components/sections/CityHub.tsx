@@ -5,9 +5,9 @@ import { PageShell } from '@/components/layout/PageShell';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { CITIES, cityPath } from '@/data/cities';
 import { ArrowRight, DISPLAY, Eyebrow } from '@/components/ui/editorial';
+import { StoreBadges } from '@/components/ui/StoreBadges';
+import { NOTIFY_FORM_URL } from '@/lib/stores';
 
-const WAITLIST_URL =
-  'https://docs.google.com/forms/d/1TaBNJ9M7Ks6LW5_Vfyqx5DodEPQZbo06bxX8PvJFLiw/viewform';
 
 const COPY = {
   FR: {
@@ -18,8 +18,8 @@ const COPY = {
     h1em: 'dans le Grand Montréal',
     lead: 'Une infirmière membre de l’OIIQ vient chez vous pour une prise de sang, un pansement, un vaccin ou le suivi d’un proche. Trouvez votre ville ci-dessous.',
     link: (inFr: string) => `Infirmière à domicile ${inFr}`,
-    missing: 'Votre ville n’est pas dans la liste ? Inscrivez-la sur la liste d’attente : nous élargissons le service à mesure que les demandes arrivent.',
-    cta: 'Rejoindre la liste d’attente',
+    missing: 'Votre ville n’est pas dans la liste ? Laissez-nous votre courriel : nous élargissons le service à mesure que les demandes arrivent.',
+    cta: 'Laisser mon courriel',
   },
   EN: {
     crumb: 'Breadcrumb',
@@ -29,8 +29,8 @@ const COPY = {
     h1em: 'in Greater Montreal',
     lead: 'An OIIQ-licensed nurse comes to your home for a blood test, a dressing, a vaccine or a check-in on a loved one. Find your city below.',
     link: (inEn: string) => `Home care nurse ${inEn}`,
-    missing: 'Don’t see your city? Add it on the waiting list: we expand the service as requests come in.',
-    cta: 'Join the waiting list',
+    missing: 'Don’t see your city? Leave us your email: we expand the service as requests come in.',
+    cta: 'Leave my email',
   },
 } as const;
 
@@ -87,22 +87,19 @@ export function CityHub() {
                 </ul>
               </div>
             ))}
-            <p className="max-w-[720px] border-t border-rule pt-8 text-[16px] leading-[1.7] text-ink-soft">{c.missing}</p>
+            <p className="max-w-[720px] border-t border-rule pt-8 text-[16px] leading-[1.7] text-ink-soft">
+              {c.missing}{' '}
+              <a href={NOTIFY_FORM_URL} target="_blank" rel="noopener noreferrer" className="font-semibold text-ink underline underline-offset-[3px]">
+                {c.cta}
+              </a>
+            </p>
           </div>
         </section>
 
         <section className="bg-ink py-[72px] text-white lg:py-24">
           <div className="container-custom flex flex-wrap items-center justify-between gap-6">
             <h2 className="font-display text-[36px] font-light leading-none tracking-[-0.03em] text-white lg:text-[56px]">{c.h1} {c.h1em}</h2>
-            <a
-              href={WAITLIST_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex h-14 items-center justify-center gap-3 rounded bg-white px-7 text-[16px] font-semibold text-ink transition-colors hover:bg-leaf-on-dark hover:text-ink-deep"
-            >
-              {c.cta}
-              <ArrowRight />
-            </a>
+            <StoreBadges size="md" />
           </div>
         </section>
       </div>

@@ -7,9 +7,10 @@
  */
 import { DEFAULT_IMAGE, SITE_NAME, SITE_URL, absoluteUrl } from './seo.ts';
 import { CITIES } from '../data/cities.ts';
+import { APP_STORE_URL, PLAY_STORE_URL } from './stores.ts';
 
 export const HOME_DESCRIPTION =
-  'Soins infirmiers à domicile au Québec par des infirmières membres de l’OIIQ. Lancement à Montréal, Laval et Longueuil. Inscrivez-vous à la liste d’attente.';
+  'Soins infirmiers à domicile par des infirmières membres de l’OIIQ à Montréal, Laval et Longueuil. Réservez dans l’app MobiSoins, sur l’App Store et Google Play.';
 
 export const ORGANIZATION_ID = `${SITE_URL}/#organization`;
 
@@ -29,7 +30,7 @@ export const POSTAL_ADDRESS = {
 
 /**
  * Every municipality with a service-area page (data/cities.ts), as schema City
- * names. Québec City, Gatineau and Sherbrooke are waitlist cities, not served yet.
+ * names. Québec City, Gatineau and Sherbrooke are not served yet (out-of-area email list).
  */
 export const SERVED_CITIES: string[] = CITIES.flatMap((c) => c.municipalities ?? [c.nameFr]);
 
@@ -80,6 +81,19 @@ export const ORGANIZATION_LD = {
       url: SITE_URL,
       name: SITE_NAME,
       inLanguage: ['fr-CA', 'en-CA'],
+      publisher: { '@id': ORGANIZATION_ID },
+    },
+    {
+      // The patient/nurse app, free on both stores (approved 2026-11).
+      '@type': 'MobileApplication',
+      '@id': `${SITE_URL}/#app`,
+      name: SITE_NAME,
+      operatingSystem: 'iOS, Android',
+      applicationCategory: 'MedicalApplication',
+      inLanguage: ['fr-CA', 'en-CA'],
+      installUrl: [APP_STORE_URL, PLAY_STORE_URL],
+      sameAs: [APP_STORE_URL, PLAY_STORE_URL],
+      offers: { '@type': 'Offer', price: '0', priceCurrency: 'CAD' },
       publisher: { '@id': ORGANIZATION_ID },
     },
   ],

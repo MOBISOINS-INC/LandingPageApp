@@ -8,12 +8,27 @@
 //    "page is back" signal re-arms playback.
 //  - A flaky cellular fetch can leave the element "playing" but frozen — a
 //    watchdog notices the clock is not advancing and reloads from that point.
+//  - Some places refuse to play media without a tap even when muted, and no page
+//    code can override it: in-app browsers (Instagram/Facebook/LinkedIn WebViews:
+//    Android WebView requires a user gesture by default, iOS WKWebView requires
+//    user action unless the host app opts out), iOS Low Power Mode, Data Saver.
+//    We report 'blocked' through onState so the page can show a living still
+//    instead of a frozen frame, and keep listening for a gesture.
+//  - In an iOS WebView that disallows inline playback, play() from a tap throws
+//    the video FULLSCREEN. We exit fullscreen at once and stop asking for good.
+//  - A codec the browser claims to support can still fail to decode (HEVC on
+//    some Android/Windows machines): one fallback file is tried on error.
 // Every failure is logged (never swallowed) so a stuck hero is diagnosable.
 
 export interface VideoSource {
   src: string;
-  poster: string;
+  /** Played instead if `src` fails to load/decode (e.g. H.264 behind HEVC). */
+  fallback?: string;
+  poster?: string;
 }
+
+/** 'playing': frames are moving. 'blocked': the browser refused (or reduced motion) — show the still. */
+export type VideoState = 'playing' | 'blocked';
 
 export interface KeepPlayingOptions {
   pickSource: () => VideoSource;
@@ -23,6 +38,7 @@ export interface KeepPlayingOptions {
   sourceQuery?: string;
   /** Seconds the clock may stand still before we treat playback as stuck. */
   stallMs?: number;
+  onState?: (state: VideoState) => void;
   log?: (level: 'info' | 'warn', msg: string, detail?: unknown) => void;
   win?: Window;
   doc?: Document;
@@ -45,18 +61,30 @@ export function keepVideoPlaying(v: HTMLVideoElement, opts: KeepPlayingOptions):
   let disposed = false;
   let announcedPlaying = false;
   let lastRejection = '';
+  let inlineRefused = false; // iOS WebView went fullscreen: never call play() again
+  const usedFallback = new Set<string>();
+  let lastState: VideoState | undefined;
+  const report = (state: VideoState) => {
+    if (state === lastState) return; // only changes reach the page
+    lastState = state;
+    opts.onState?.(state);
+  };
+  const current = () => v.currentSrc || v.src || '';
 
   const visible = () => doc.visibilityState === 'visible';
 
   const applySource = () => {
-    const { src, poster } = opts.pickSource();
+    const { src, fallback, poster } = opts.pickSource();
     // currentSrc covers a source chosen natively from <source> children, so we
-    // do not restart a video the browser is already autoplaying.
-    if (!v.poster.endsWith(poster)) v.poster = poster;
-    if (!(v.currentSrc || v.src).endsWith(src)) {
-      v.src = src;
-      log('info', `source -> ${src}`);
-    }
+    // do not restart a video the browser is already autoplaying — whether it
+    // picked the preferred file or the fallback.
+    if (poster && !v.poster.endsWith(poster)) v.poster = poster;
+    const cur = current();
+    const accepted = [src, fallback].filter(Boolean) as string[];
+    if (accepted.some((s) => cur.endsWith(s))) return;
+    const next = usedFallback.has(src) && fallback ? fallback : src;
+    v.src = next;
+    log('info', `source -> ${next}`);
   };
 
   const tryPlay = (why: string) => {
@@ -64,8 +92,10 @@ export function keepVideoPlaying(v: HTMLVideoElement, opts: KeepPlayingOptions):
     applySource();
     if (opts.reduceMotion) {
       v.pause();
+      report('blocked');
       return;
     }
+    if (inlineRefused) return;
     if (!visible()) return; // browsers defer hidden-tab playback; we retry on return
     // iOS only honours autoplay when the element is muted + inline *as
     // properties*, and React does not reliably reflect `muted` after hydration.
@@ -95,6 +125,7 @@ export function keepVideoPlaying(v: HTMLVideoElement, opts: KeepPlayingOptions):
         // The watchdog retries every few seconds; log a given rejection once,
         // not on every retry.
         const key = String((err as Error)?.name ?? err);
+        if (key === 'NotAllowedError') report('blocked');
         if (key === lastRejection) return;
         lastRejection = key;
         log('warn', `play() rejected (${why}) — will retry on next gesture/resume`, err);
@@ -145,7 +176,29 @@ export function keepVideoPlaying(v: HTMLVideoElement, opts: KeepPlayingOptions):
   const onProgress = () => {
     gotData = true;
   };
-  const onError = () => log('warn', 'media error', v.error);
+  const onError = () => {
+    log('warn', 'media error', v.error);
+    const { src, fallback } = opts.pickSource();
+    if (fallback && current().endsWith(src) && !usedFallback.has(src)) {
+      usedFallback.add(src);
+      log('warn', `${src} failed — falling back to ${fallback}`);
+      v.src = fallback;
+      tryPlay('fallback');
+    }
+  };
+  const onPlaying = () => report('playing');
+  const onFullscreen = () => {
+    // iOS WebView without inline playback: the tap-started video took over the screen.
+    inlineRefused = true;
+    try {
+      (v as HTMLVideoElement & { webkitExitFullscreen?: () => void }).webkitExitFullscreen?.();
+    } catch (err) {
+      log('warn', 'could not exit fullscreen', err);
+    }
+    v.pause();
+    report('blocked');
+    log('warn', 'inline playback refused (went fullscreen) — staying on the still');
+  };
   const onResume = (e: Event) => {
     if (visible()) tryPlay(e.type);
   };
@@ -158,6 +211,8 @@ export function keepVideoPlaying(v: HTMLVideoElement, opts: KeepPlayingOptions):
   RESUME_MEDIA_EVENTS.forEach((n) => v.addEventListener(n, onMedia));
   v.addEventListener('error', onError);
   v.addEventListener('progress', onProgress);
+  v.addEventListener('playing', onPlaying);
+  v.addEventListener('webkitbeginfullscreen', onFullscreen);
   doc.addEventListener('visibilitychange', onResume);
   win.addEventListener('pageshow', onResume);
   win.addEventListener('focus', onResume);
@@ -166,6 +221,9 @@ export function keepVideoPlaying(v: HTMLVideoElement, opts: KeepPlayingOptions):
   mq?.addEventListener('change', onBreakpoint);
 
   tryPlay('mount');
+  // The browser may have autoplayed from the server HTML before this ran, so the
+  // 'playing' event is already gone: report it now if frames are moving.
+  if (!v.paused && !v.ended && v.readyState >= 3) report('playing');
 
   return () => {
     disposed = true;
@@ -173,6 +231,8 @@ export function keepVideoPlaying(v: HTMLVideoElement, opts: KeepPlayingOptions):
     RESUME_MEDIA_EVENTS.forEach((n) => v.removeEventListener(n, onMedia));
     v.removeEventListener('error', onError);
     v.removeEventListener('progress', onProgress);
+    v.removeEventListener('playing', onPlaying);
+    v.removeEventListener('webkitbeginfullscreen', onFullscreen);
     doc.removeEventListener('visibilitychange', onResume);
     win.removeEventListener('pageshow', onResume);
     win.removeEventListener('focus', onResume);

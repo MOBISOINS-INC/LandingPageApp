@@ -316,7 +316,7 @@ const article: { FR: ArticleData; EN: ArticleData } = {
           'Le principal est le crédit d’impôt pour maintien à domicile des aînés, offert par le gouvernement du Québec aux personnes de 70 ans et plus. C’est un crédit remboursable (il est versé même si vous ne payez pas d’impôt) dont le taux est bonifié graduellement : 38 % des dépenses admissibles en 2024, 39 % en 2025 et 40 % en 2026, jusqu’à un plafond annuel qui varie selon votre degré d’autonomie. Les services infirmiers figurent parmi les services admissibles.',
           'À cela peuvent s’ajouter le remboursement par une assurance collective ou privée, ainsi que les crédits d’impôt pour frais médicaux, au fédéral comme au provincial. Les règles comportent des conditions : conservez tous vos reçus et validez votre situation auprès de Revenu Québec ou d’un spécialiste en fiscalité.',
           'Il est utile de comparer le coût d’une visite avec ce qu’elle évite réellement : un transport adapté ou un taxi aller-retour, une journée de congé pour le proche qui accompagne, le stationnement, et surtout les complications qui auraient pu mener à une hospitalisation. Ce calcul ne se fait pas qu’en dollars, mais il aide à voir la dépense autrement.',
-          'Chez MobiSoins, nous voulons que le prix soit clair avant la réservation, sans surprise. Nous publierons nos tarifs au moment du lancement de nos premières visites, et nos reçus seront conçus pour faciliter vos démarches de crédit d’impôt et de remboursement.',
+          'Chez MobiSoins, nous voulons que le prix soit clair avant la réservation, sans surprise. Le prix de chaque soin s’affiche dans l’app avant la réservation, et nos reçus seront conçus pour faciliter vos démarches de crédit d’impôt et de remboursement.',
         ],
         callout: {
           label: 'Bon à savoir',
@@ -340,9 +340,9 @@ const article: { FR: ArticleData; EN: ArticleData } = {
         ],
       },
       {
-        title: 'Comment fonctionnera une visite MobiSoins pour un aîné',
+        title: 'Comment fonctionne une visite MobiSoins pour un aîné',
         content: [
-          'MobiSoins est conçu pour que les soins viennent aux aînés, et non l’inverse. Voici, étape par étape, comment se dérouleront les visites que nous préparons au Québec.',
+          'MobiSoins est conçu pour que les soins viennent aux aînés, et non l’inverse. Voici, étape par étape, comment se déroule une visite MobiSoins.',
           'Tout commence par une demande en ligne, qui prend quelques minutes. L’aîné lui-même ou un proche indique le type de soin, l’adresse, le moment souhaité et, si nécessaire, la requête ou l’ordonnance du médecin. Il est aussi possible de préciser des informations utiles : mobilité réduite, trouble auditif, présence d’un proche, code d’accès de l’immeuble.',
           'Une infirmière coordonnatrice révise ensuite chaque demande. Elle s’assure que le soin peut être donné à domicile en toute sécurité, vérifie les documents, et communique avec vous si des précisions sont nécessaires. Si la situation relève plutôt de l’urgence ou d’un autre service, elle vous le dira clairement.',
           'Le jour de la visite, une infirmière membre de l’OIIQ se présente avec le matériel stérile nécessaire. Elle prend le temps de se présenter, de vérifier l’identité de la personne, d’expliquer chaque étape et de répondre aux questions. Après le soin, les prélèvements sont acheminés au laboratoire, les observations pertinentes sont documentées et les consignes sont laissées, par écrit au besoin.',
@@ -365,7 +365,7 @@ const article: { FR: ArticleData; EN: ArticleData } = {
           'MobiSoins ne prétend pas remplacer le CLSC, le médecin de famille ou l’urgence. Notre rôle est de combler l’espace entre les trois : des soins infirmiers planifiés, donnés à la maison par des infirmières membres de l’OIIQ, sans liste d’attente de plusieurs mois et sans déplacement.',
           'Concrètement : prises de sang et prélèvements, pansements et soins de plaies, suivi de la tension et du diabète, aide à la médication, vaccination, injections prescrites. Vous réserverez en quelques minutes, pour vous-même ou pour un parent, et vous saurez à l’avance qui vient et quand.',
           'Nous croyons que les soins à domicile doivent être simples à obtenir, transparents dans leur prix et rigoureux dans leur pratique. Nous croyons aussi qu’une infirmière qui entre dans la maison d’un aîné doit prendre le temps : le temps d’expliquer, d’écouter et de remarquer ce qui a changé.',
-          'Nous préparons actuellement nos premières visites au Québec. En vous inscrivant à la liste d’attente, vous nous indiquez les soins dont votre famille a besoin et la région où vous habitez : c’est ce qui guide notre déploiement.',
+          'Les visites MobiSoins sont offertes dans le Grand Montréal. Dans l’app, vous indiquez le soin dont votre parent a besoin et l’adresse de la visite, et une infirmière membre de l’OIIQ vient chez lui.',
         ],
         links: [
           { label: 'Prise de sang à domicile', href: '/services/prise-sang' },
@@ -425,7 +425,7 @@ const article: { FR: ArticleData; EN: ArticleData } = {
       content: [
         'Vieillir chez soi n’est pas un luxe : c’est ce que souhaitent la plupart des aînés, et ce qui devient possible lorsque les soins se rendent jusqu’à eux.',
         'Le réseau public ne suffit pas à la demande, et les familles ne peuvent pas tout porter. Des soins infirmiers réguliers à domicile préservent l’autonomie, préviennent les chutes et les complications, sécurisent la médication et redonnent du souffle aux proches.',
-        'Le meilleur moment pour organiser ces soins n’est pas après la crise, mais avant. Faites la demande au CLSC, parlez-en avec votre parent, préparez l’information utile, et appuyez-vous sur des services qui complètent le réseau. MobiSoins prépare ses premières visites au Québec, et nous serons heureux de vous accompagner.',
+        'Le meilleur moment pour organiser ces soins n’est pas après la crise, mais avant. Faites la demande au CLSC, parlez-en avec votre parent, préparez l’information utile, et appuyez-vous sur des services qui complètent le réseau. MobiSoins offre ces visites dans le Grand Montréal, et nous serons heureux de vous accompagner.',
       ],
     },
   },
@@ -727,7 +727,7 @@ const article: { FR: ArticleData; EN: ArticleData } = {
           'The main one is Quebec’s tax credit for home-support services for seniors, available to people aged 70 and over. It is a refundable credit (paid even if you owe no tax) with a rate that is being raised gradually: 38% of eligible expenses in 2024, 39% in 2025, and 40% in 2026, up to an annual ceiling that depends on your level of autonomy. Nursing services are among the eligible services.',
           'On top of this, there may be reimbursement from group or private insurance, as well as federal and provincial medical-expense tax credits. The rules come with conditions: keep all your receipts and confirm your situation with Revenu Québec or a tax professional.',
           'It helps to compare the cost of a visit with what it actually avoids: adapted transport or a round-trip taxi, a day off for the family member who comes along, parking, and above all the complications that could have led to a hospital stay. The calculation is not only in dollars, but it helps put the expense in perspective.',
-          'At MobiSoins, we want the price to be clear before you book, with no surprises. We will publish our rates when our first visits launch, and our receipts will be designed to make your tax-credit and reimbursement claims easier.',
+          'At MobiSoins, we want the price to be clear before you book, with no surprises. The price of each service is shown in the app before you book, and our receipts will be designed to make your tax-credit and reimbursement claims easier.',
         ],
         callout: {
           label: 'Good to know',
@@ -751,9 +751,9 @@ const article: { FR: ArticleData; EN: ArticleData } = {
         ],
       },
       {
-        title: 'How a MobiSoins visit for a senior will work',
+        title: 'How a MobiSoins visit for a senior works',
         content: [
-          'MobiSoins is designed so that care comes to seniors, not the other way around. Here, step by step, is how the visits we are preparing in Quebec will work.',
+          'MobiSoins is designed so that care comes to seniors, not the other way around. Here, step by step, is how a MobiSoins visit works.',
           'It all starts with an online request that takes a few minutes. The senior or a family member indicates the type of care, the address, the preferred time and, if needed, the physician’s requisition or prescription. You can also add useful information: reduced mobility, hearing difficulties, a family member being present, the building’s access code.',
           'A coordinating nurse then reviews every request. She makes sure the care can be delivered safely at home, checks the documents, and contacts you if anything needs clarifying. If the situation is better suited to the ER or another service, she will tell you clearly.',
           'On the day of the visit, an OIIQ-registered nurse arrives with the necessary sterile supplies. She takes the time to introduce herself, confirm the person’s identity, explain each step and answer questions. After the care, specimens are sent to the laboratory, relevant observations are documented, and instructions are left, in writing if needed.',
@@ -776,7 +776,7 @@ const article: { FR: ArticleData; EN: ArticleData } = {
           'MobiSoins does not claim to replace the CLSC, the family doctor, or the emergency room. Our role is to fill the space between the three: planned nursing care, delivered at home by OIIQ-registered nurses, with no months-long waitlist and no travel.',
           'In practice: blood draws and specimen collection, dressings and wound care, blood-pressure and diabetes follow-up, medication assistance, vaccination, prescribed injections. You will book in minutes, for yourself or for a parent, and you will know in advance who is coming and when.',
           'We believe home care should be simple to get, transparent in its pricing and rigorous in its practice. We also believe that a nurse who enters a senior’s home should take her time: time to explain, to listen and to notice what has changed.',
-          'We are currently preparing our first visits in Quebec. By joining the waitlist, you tell us which care your family needs and where you live: that is what guides our rollout.',
+          'MobiSoins visits are available across Greater Montreal. In the app, you choose the care your parent needs and the visit address, and an OIIQ-registered nurse comes to their home.',
         ],
         links: [
           { label: 'Blood draw at home', href: '/services/prise-sang' },
@@ -836,7 +836,7 @@ const article: { FR: ArticleData; EN: ArticleData } = {
       content: [
         'Aging at home is not a luxury: it is what most seniors want, and what becomes possible when care comes to them.',
         'The public network cannot keep up with demand, and families cannot carry everything. Regular nursing care at home preserves independence, prevents falls and complications, makes medications safer, and gives caregivers room to breathe.',
-        'The best time to arrange this care is not after the crisis, but before. Apply to the CLSC, talk it over with your parent, prepare the useful information, and lean on services that complement the network. MobiSoins is preparing its first visits in Quebec, and we will be glad to support you.',
+        'The best time to arrange this care is not after the crisis, but before. Apply to the CLSC, talk it over with your parent, prepare the useful information, and lean on services that complement the network. MobiSoins offers these visits across Greater Montreal, and we will be glad to support you.',
       ],
     },
   },

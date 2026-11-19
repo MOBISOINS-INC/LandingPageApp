@@ -6,9 +6,8 @@ import { useLanguage } from '../../contexts/LanguageContext';
 import { useReveal } from '../../hooks/useReveal';
 import { ArrowRight, DISPLAY, Eyebrow } from '../ui/editorial';
 import { Journey } from './Journey';
+import { StoreBadges } from '../ui/StoreBadges';
 
-const WAITLIST_URL =
-  'https://docs.google.com/forms/d/1TaBNJ9M7Ks6LW5_Vfyqx5DodEPQZbo06bxX8PvJFLiw/viewform';
 
 // Editorial About page on the landing page's paper/ink system: one oversized
 // statement, a ruled facts strip, the problem, a navy commitment band, the
@@ -314,15 +313,7 @@ export const About = () => {
             </div>
             <div className="flex flex-col items-center gap-4 lg:items-stretch lg:gap-5">
               <p className="text-[14px] leading-[1.55] text-white/85 lg:text-[18px] lg:leading-[1.55]">{t('about.ctaBody')}</p>
-              <a
-                href={WAITLIST_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex h-11 items-center justify-center gap-2.5 rounded bg-white px-5 text-[14.5px] font-semibold lg:h-14 lg:gap-3 lg:px-7 lg:text-[16px] text-ink transition-colors hover:bg-leaf-on-dark hover:text-ink-deep"
-              >
-                {t('about.ctaButton')}
-                <ArrowRight />
-              </a>
+              <StoreBadges size="md" className="justify-center lg:justify-start" />
             </div>
           </div>
         </div>

@@ -9,9 +9,8 @@ import type { City } from '@/data/cities';
 import { getServiceBySlug } from '@/data/services';
 import { serviceSearchName } from '@/lib/serviceSearch';
 import { ArrowRight, DISPLAY, Eyebrow } from '@/components/ui/editorial';
+import { StoreBadges } from '@/components/ui/StoreBadges';
 
-const WAITLIST_URL =
-  'https://docs.google.com/forms/d/1TaBNJ9M7Ks6LW5_Vfyqx5DodEPQZbo06bxX8PvJFLiw/viewform';
 
 const COPY = {
   FR: {
@@ -20,14 +19,14 @@ const COPY = {
     hub: 'Secteurs desservis',
     eyebrow: 'Secteur desservi',
     h1: 'Infirmière à domicile',
-    cta: 'Rejoindre la liste d’attente',
+    cta: 'Télécharger l’app',
     allServices: 'Voir tous les services',
     servicesTitle: (c: City) => `Les soins les plus demandés ${c.inFr}`,
     more: 'En savoir plus',
     areasTitle: (c: City) => `Partout ${c.inFr}`,
     howTitle: 'Comment ça se passe',
     steps: [
-      { t: 'Réservez en ligne', d: 'Choisissez le soin, la date et l’heure qui vous conviennent.' },
+      { t: 'Réservez dans l’app', d: 'Choisissez le soin, la date et l’heure qui vous conviennent.' },
       { t: 'Une infirmière se déplace', d: 'Membre de l’OIIQ, elle vient directement chez vous.' },
       { t: 'Le soin est prodigué', d: 'En toute sécurité, dans le confort de votre domicile.' },
       { t: 'Rapport dans l’application', d: 'Un compte rendu clinique est disponible après la visite.' },
@@ -36,7 +35,7 @@ const COPY = {
     faq: (c: City) => [
       {
         q: `L’infirmière se déplace-t-elle ${c.inFr} ?`,
-        a: `Oui. MobiSoins lance d’abord ses visites dans le Grand Montréal, dont ${c.nameFr}. Inscrivez-vous à la liste d’attente avec votre adresse : nous vous écrivons dès qu’une visite est possible chez vous.`,
+        a: `Oui. MobiSoins offre des visites à domicile dans le Grand Montréal, dont ${c.nameFr}. Téléchargez l’app MobiSoins sur l’App Store ou Google Play pour réserver.`,
       },
       {
         q: 'Mon médecin m’a remis une requête de prise de sang. Est-ce suffisant ?',
@@ -57,14 +56,14 @@ const COPY = {
     hub: 'Service areas',
     eyebrow: 'Service area',
     h1: 'Home care nurse',
-    cta: 'Join the waiting list',
+    cta: 'Download the app',
     allServices: 'See all services',
     servicesTitle: (c: City) => `Most requested care ${c.inEn}`,
     more: 'Learn more',
     areasTitle: (c: City) => `Across ${c.inEn.replace(/^in /, '')}`,
     howTitle: 'How it works',
     steps: [
-      { t: 'Book online', d: 'Pick the service, date and time that work for you.' },
+      { t: 'Book in the app', d: 'Pick the service, date and time that work for you.' },
       { t: 'A nurse comes to you', d: 'An OIIQ member, she comes straight to your home.' },
       { t: 'Care is delivered', d: 'Safely, in the comfort of your own home.' },
       { t: 'Report in the app', d: 'A clinical summary is available after the visit.' },
@@ -73,7 +72,7 @@ const COPY = {
     faq: (c: City) => [
       {
         q: `Do your nurses come to homes ${c.inEn}?`,
-        a: `Yes. MobiSoins is launching first in Greater Montreal, including ${c.nameEn === 'West Island' ? 'the West Island' : c.nameEn}. Join the waiting list with your address and we will let you know as soon as a visit is available where you live.`,
+        a: `Yes. MobiSoins offers home visits across Greater Montreal, including ${c.nameEn === 'West Island' ? 'the West Island' : c.nameEn}. Download the MobiSoins app on the App Store or Google Play to book.`,
       },
       {
         q: 'My doctor gave me a blood test requisition. Is that enough?',
@@ -124,15 +123,7 @@ export function CityLanding({ slug }: { slug: string }) {
                   {en ? city.leadEn : city.leadFr}
                 </p>
                 <div className="flex flex-wrap items-center gap-6">
-                  <a
-                    href={WAITLIST_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group inline-flex h-14 items-center justify-center gap-3 rounded bg-ink px-7 text-[16px] font-semibold text-white transition-colors hover:bg-ink-deep"
-                  >
-                    {c.cta}
-                    <span className="transition-transform duration-300 group-hover:translate-x-1"><ArrowRight /></span>
-                  </a>
+                  <StoreBadges size="md" onDark={false} />
                   <Link href="/services" className="inline-flex min-h-11 items-center border-b border-leaf pb-1 text-[16px] font-semibold text-ink">
                     {c.allServices}
                   </Link>
@@ -257,15 +248,7 @@ export function CityLanding({ slug }: { slug: string }) {
         <section className="bg-ink py-[72px] text-white lg:py-28">
           <div className="container-custom grid grid-cols-1 gap-y-7 lg:grid-cols-[minmax(0,1fr)_minmax(0,420px)] lg:items-end lg:gap-x-[120px]">
             <h2 className="font-display text-[40px] font-light leading-none tracking-[-0.03em] text-white lg:text-[68px]">{c.ctaTitle(city)}</h2>
-            <a
-              href={WAITLIST_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex h-14 items-center justify-center gap-3 rounded bg-white px-7 text-[16px] font-semibold text-ink transition-colors hover:bg-leaf-on-dark hover:text-ink-deep"
-            >
-              {c.cta}
-              <ArrowRight />
-            </a>
+            <StoreBadges size="md" className="lg:justify-end" />
           </div>
         </section>
       </div>

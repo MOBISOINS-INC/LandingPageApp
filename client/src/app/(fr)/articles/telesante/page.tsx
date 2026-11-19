@@ -47,7 +47,7 @@ const article: { FR: ArticleData; EN: ArticleData } = {
           'Or les urgences débordent. Selon le bilan publié par Santé Québec en janvier 2025, la durée moyenne de séjour à l’urgence était de 18,8 heures, avec un taux d’occupation de 115 % à l’échelle provinciale et de 141 % à Montréal. Près de 9 600 visites y étaient enregistrées chaque jour.',
           'Derrière ces chiffres, il y a des situations très concrètes. Une personne âgée qui attend sur une civière pour faire refaire un pansement qui aurait pu être changé chez elle. Un parent qui passe une nuit blanche à l’urgence avec un enfant fiévreux, alors qu’un avis professionnel au téléphone l’aurait rassuré en dix minutes. Un travailleur qui perd une journée de salaire pour une prise de sang de routine. Chacune de ces visites occupe une place, du personnel et du temps qui manquent ensuite aux cas réellement urgents.',
           'Le problème n’est donc pas seulement le manque de médecins ou d’infirmières. C’est aussi que le système oblige le patient à se déplacer vers le soin, même quand le soin pourrait venir à lui, ou se faire à distance. Chaque déplacement évitable ajoute de l’attente, de la fatigue, des coûts et parfois des risques, en particulier pour les personnes fragiles.',
-          'Dans ce contexte, toute solution qui permet d’obtenir un avis professionnel sans se déplacer ni attendre des heures est accueillie à bras ouverts. C’est exactement la promesse de la télésanté. Et c’est aussi, comme nous le verrons, la raison d’être des soins infirmiers à domicile que MobiSoins prépare au Québec.',
+          'Dans ce contexte, toute solution qui permet d’obtenir un avis professionnel sans se déplacer ni attendre des heures est accueillie à bras ouverts. C’est exactement la promesse de la télésanté. Et c’est aussi, comme nous le verrons, la raison d’être des soins infirmiers à domicile que MobiSoins offre dans le Grand Montréal.',
         ],
       },
       {
@@ -180,9 +180,9 @@ const article: { FR: ArticleData; EN: ArticleData } = {
         quote: 'Dans un parcours hybride, l’infirmière à domicile devient les yeux et les mains de l’équipe soignante.',
       },
       {
-        title: 'Comment fonctionnera une visite MobiSoins après une téléconsultation',
+        title: 'Comment fonctionne une visite MobiSoins après une téléconsultation',
         content: [
-          'MobiSoins est conçu autour de ce parcours hybride. Voici, étape par étape, comment se dérouleront les visites que nous préparons au Québec.',
+          'MobiSoins est conçu autour de ce parcours hybride. Voici, étape par étape, comment se déroule une visite MobiSoins.',
           'Tout commence par une demande en ligne, qui prend quelques minutes : le type de soin, votre code postal, le moment qui vous convient et, si vous en avez une, la requête ou l’ordonnance remise par votre médecin. Une infirmière coordonnatrice révise ensuite la demande pour s’assurer que le soin peut être offert à domicile en toute sécurité, et vous contacte pour confirmer les détails.',
           'Le jour de la visite, une infirmière membre de l’OIIQ se présente chez vous avec le matériel nécessaire. Elle prend le temps de vérifier votre identité, de relire la requête avec vous, de répondre à vos questions et d’expliquer ce qu’elle va faire. Le soin est réalisé dans votre environnement, à votre rythme.',
           'Après la visite, l’information suit : les prélèvements sont acheminés au laboratoire, les résultats sont transmis au professionnel qui les a demandés, et les observations pertinentes sont documentées. Vous recevez les consignes à suivre, par écrit si nécessaire, pour les jours qui viennent.',
@@ -369,7 +369,7 @@ const article: { FR: ArticleData; EN: ArticleData } = {
           'Au-delà de la technologie, la télésanté a changé une chose plus profonde : le patient n’attend plus que le système vienne à lui, il choisit comment et quand il y accède. Il consulte ses résultats en ligne, prépare ses questions, mesure sa tension à la maison. Il devient un acteur de sa santé.',
           'Les soins à domicile prolongent ce mouvement. Lorsqu’une infirmière se déplace chez vous, le rapport s’inverse : le soin s’adapte à votre vie, et non l’inverse. Le temps passé ensemble sert à comprendre, à poser des questions, à apprendre à surveiller les bons signes.',
           'Cette relation repose sur la confiance. Confiance que la professionnelle qui entre chez vous est compétente et dûment autorisée. Confiance que vos informations sont protégées. Confiance que ce qui a été décidé lors de la téléconsultation sera fait, correctement et au bon moment.',
-          'C’est la vision qui anime MobiSoins : des soins infirmiers planifiés, offerts à domicile par des infirmières membres de l’OIIQ, réservés en quelques minutes. Nous préparons nos premières visites au Québec. La liste d’attente est ouverte.',
+          'C’est la vision qui anime MobiSoins : des soins infirmiers planifiés, offerts à domicile par des infirmières membres de l’OIIQ, réservés en quelques minutes. Les réservations sont ouvertes dans le Grand Montréal, dans l’app MobiSoins.',
         ],
       },
     ],
@@ -380,7 +380,7 @@ const article: { FR: ArticleData; EN: ArticleData } = {
       },
       {
         q: 'Mon médecin m’a remis une requête de prise de sang lors d’une téléconsultation. Dois-je me rendre au centre de prélèvement ?',
-        a: 'Pas nécessairement. Une infirmière peut effectuer le prélèvement à votre domicile à partir de votre requête. C’est l’un des services que MobiSoins prépare pour ses premières visites.',
+        a: 'Pas nécessairement. Une infirmière peut effectuer le prélèvement à votre domicile à partir de votre requête. C’est l’un des services offerts par MobiSoins.',
       },
       {
         q: 'MobiSoins offre-t-il des consultations vidéo ?',
@@ -422,7 +422,7 @@ const article: { FR: ArticleData; EN: ArticleData } = {
       content: [
         'La télésanté ne remplace pas les soins en personne, elle les complète. Elle excelle pour discuter, orienter, renouveler et suivre. Mais ce qu’elle ne peut pas faire à distance (prélever, panser, injecter, mesurer de façon fiable, observer) une infirmière peut le faire chez vous.',
         'Consultation à l’écran, prélèvement, pansement ou suivi à la maison : c’est ce modèle hybride qui épargne réellement aux patients les déplacements et l’attente, qui soulage les proches aidants et qui libère de la place dans le réseau pour ceux qui en ont le plus besoin.',
-        'MobiSoins prépare ses premières visites au Québec, avec des infirmières membres de l’OIIQ et une demande qui se fait en quelques minutes. Inscrivez-vous à la liste d’attente pour être parmi les premiers à en profiter.',
+        'MobiSoins offre des visites à domicile dans le Grand Montréal, avec des infirmières membres de l’OIIQ et une demande qui se fait en quelques minutes dans l’app.',
       ],
     },
   },
@@ -457,7 +457,7 @@ const article: { FR: ArticleData; EN: ArticleData } = {
           'And emergency rooms are overflowing. According to the update published by Santé Québec in January 2025, the average ER length of stay was 18.8 hours, with occupancy at 115% province-wide and 141% in Montreal. Nearly 9,600 visits were being recorded every day.',
           'Behind those numbers are very concrete situations. An older adult waiting on a stretcher to have a dressing changed that could have been changed at home. A parent spending a sleepless night in the ER with a feverish child, when ten minutes of professional advice by phone would have reassured them. A worker losing a day’s pay for a routine blood test. Each of these visits takes up a bed, staff, and time that are then missing for truly urgent cases.',
           'So the problem is not only a shortage of doctors or nurses. It is also that the system makes patients travel to care, even when care could come to them, or happen at a distance. Every avoidable trip adds waiting, fatigue, cost, and sometimes risk, especially for frail people.',
-          'In that context, any solution that offers professional advice without travelling or waiting for hours is welcomed with open arms. That is exactly the promise of telehealth. And it is also, as we will see, the reason home nursing exists, the service MobiSoins is preparing in Quebec.',
+          'In that context, any solution that offers professional advice without travelling or waiting for hours is welcomed with open arms. That is exactly the promise of telehealth. And it is also, as we will see, the reason home nursing exists, the service MobiSoins offers in Greater Montreal.',
         ],
       },
       {
@@ -590,9 +590,9 @@ const article: { FR: ArticleData; EN: ArticleData } = {
         quote: 'In a hybrid journey, the home nurse becomes the eyes and hands of the care team.',
       },
       {
-        title: 'How a MobiSoins visit will work after a teleconsultation',
+        title: 'How a MobiSoins visit works after a teleconsultation',
         content: [
-          'MobiSoins is built around this hybrid journey. Here, step by step, is how the visits we are preparing in Quebec will work.',
+          'MobiSoins is built around this hybrid journey. Here, step by step, is how a MobiSoins visit works.',
           'It all starts with an online request that takes a few minutes: the type of care, your postal code, the time that suits you and, if you have one, the requisition or prescription your doctor gave you. A coordinating nurse then reviews the request to make sure the care can be provided safely at home, and contacts you to confirm the details.',
           'On the day of the visit, an OIIQ-registered nurse arrives at your home with the necessary equipment. She takes the time to confirm your identity, go over the requisition with you, answer your questions, and explain what she is going to do. The care happens in your own surroundings, at your own pace.',
           'After the visit, the information follows: samples go to the lab, results are sent to the professional who ordered them, and relevant observations are documented. You receive instructions for the days ahead, in writing if needed.',
@@ -779,7 +779,7 @@ const article: { FR: ArticleData; EN: ArticleData } = {
           'Beyond the technology, telehealth changed something deeper: patients no longer wait for the system to come to them, they choose how and when to access it. They view results online, prepare their questions, measure their blood pressure at home. They become active participants in their own health.',
           'Home care extends that shift. When a nurse travels to you, the relationship flips: care adapts to your life, not the other way around. Time together is spent understanding, asking questions, and learning which signs to watch for.',
           'That relationship rests on trust. Trust that the professional entering your home is competent and duly licensed. Trust that your information is protected. Trust that what was decided during the teleconsultation will be done, correctly and on time.',
-          'That is the vision behind MobiSoins: planned nursing care, delivered at home by OIIQ-registered nurses, booked in minutes. We are preparing our first visits in Quebec. The waitlist is open.',
+          'That is the vision behind MobiSoins: planned nursing care, delivered at home by OIIQ-registered nurses, booked in minutes. Booking is open in Greater Montreal, in the MobiSoins app.',
         ],
       },
     ],
@@ -790,7 +790,7 @@ const article: { FR: ArticleData; EN: ArticleData } = {
       },
       {
         q: 'My doctor gave me a blood-work requisition during a teleconsultation. Do I have to go to a test centre?',
-        a: 'Not necessarily. A nurse can draw the sample at your home based on your requisition. It is one of the services MobiSoins is preparing for its first visits.',
+        a: 'Not necessarily. A nurse can draw the sample at your home based on your requisition. It is one of the services MobiSoins offers.',
       },
       {
         q: 'Does MobiSoins offer video consultations?',
@@ -832,7 +832,7 @@ const article: { FR: ArticleData; EN: ArticleData } = {
       content: [
         'Telehealth does not replace in-person care, it complements it. It excels at discussing, triaging, renewing, and following up. But what it cannot do at a distance (draw samples, dress wounds, inject, measure reliably, observe) a nurse can do in your home.',
         'Consultation on screen; blood draw, dressing, or follow-up at home: it is this hybrid model that truly spares patients the travel and the wait, relieves family caregivers, and frees up room in the system for those who need it most.',
-        'MobiSoins is preparing its first visits in Quebec, with OIIQ-registered nurses and a request that takes just a few minutes. Join the waitlist to be among the first to benefit.',
+        'MobiSoins offers home visits across Greater Montreal, with OIIQ-registered nurses and a request that takes just a few minutes in the app.',
       ],
     },
   },

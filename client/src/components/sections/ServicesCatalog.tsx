@@ -9,9 +9,8 @@ import { SERVICE_CATEGORIES, type ServiceCategory } from '../../data/services';
 import { SERVICE_PHOTOS } from '../../data/servicePhotos';
 import { ArrowRight, DISPLAY, Eyebrow } from '../ui/editorial';
 import { ServicesTrack } from './ServicesTrack';
+import { StoreBadges } from '@/components/ui/StoreBadges';
 
-const WAITLIST_URL =
-  'https://docs.google.com/forms/d/1TaBNJ9M7Ks6LW5_Vfyqx5DodEPQZbo06bxX8PvJFLiw/viewform';
 
 const COPY = {
   FR: {
@@ -28,7 +27,7 @@ const COPY = {
     insurance:
       'Certains soins sont admissibles au remboursement par assurances privées. Reçu officiel fourni après chaque visite.',
     ctaTitle: 'Prêt à recevoir des soins à la maison ?',
-    ctaButton: 'Rejoindre la liste d’attente',
+    ctaButton: 'Télécharger l’app',
   },
   EN: {
     badge: 'The catalogue',
@@ -44,7 +43,7 @@ const COPY = {
     insurance:
       'Some services are eligible for private insurance reimbursement. An official receipt is provided after every visit.',
     ctaTitle: 'Ready to get care at home?',
-    ctaButton: 'Join the waiting list',
+    ctaButton: 'Download the app',
   },
 } as const;
 
@@ -311,16 +310,9 @@ export function ServicesCatalog() {
                 {c.ctaTitle}
               </h2>
             </div>
-            <a
-              href={WAITLIST_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex h-11 items-center justify-center gap-2.5 rounded bg-white px-5 text-[14.5px] font-semibold text-ink transition-colors hover:bg-leaf-on-dark hover:text-ink-deep lg:h-14 lg:gap-3 lg:px-7 lg:text-[16px]"
-              style={cta.rise(1, 0.15)}
-            >
-              {c.ctaButton}
-              <ArrowRight />
-            </a>
+            <div style={cta.rise(1, 0.15)}>
+              <StoreBadges size="md" className="justify-center lg:justify-start" />
+            </div>
           </div>
         </div>
       </section>

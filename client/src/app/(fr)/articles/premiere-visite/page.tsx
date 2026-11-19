@@ -29,7 +29,7 @@ const article: { FR: ArticleData; EN: ArticleData } = {
           'Une prise de sang, un changement de pansement, le retrait de points de suture, une injection mensuelle : ce sont des soins courts, que les infirmières réalisent tous les jours. Pourtant, au Québec, y accéder peut occuper une demi-journée, parfois bien davantage. Il faut obtenir un rendez-vous au centre de prélèvement, prendre congé, trouver du stationnement, patienter dans une salle d’attente, puis refaire le trajet en sens inverse.',
           'Pour une personne en pleine forme, c’est un irritant. Pour une personne âgée qui ne conduit plus, un parent seul avec un nourrisson, quelqu’un qui sort d’une chirurgie ou qui vit avec une maladie chronique, c’est un véritable obstacle. Résultat : des suivis reportés, des pansements changés trop tard, des bilans sanguins qu’on remet à « la semaine prochaine ».',
           'MobiSoins est né exactement de ce constat. L’un de nos fondateurs a vu sa mère passer deux journées entières à l’hôpital, à Montréal, pour un soin qui ne demandait que quelques minutes. L’idée est simple : si le soin peut être donné de façon sécuritaire à la maison, c’est l’infirmière qui se déplace, pas vous.',
-          'Ce guide est écrit pour la personne qui s’apprête à recevoir une infirmière chez elle pour la toute première fois, et pour les proches qui l’accompagnent. Nous préparons nos premières visites au Québec : les pages qui suivent décrivent comment elles fonctionneront, ce que vous pourrez préparer et ce que vous êtes en droit d’attendre. Lisez-le d’un trait ou revenez à la section qui vous concerne : chaque partie se lit de façon autonome.',
+          'Ce guide est écrit pour la personne qui s’apprête à recevoir une infirmière chez elle pour la toute première fois, et pour les proches qui l’accompagnent. Les visites MobiSoins sont offertes dans le Grand Montréal : les pages qui suivent décrivent comment elles fonctionnent, ce que vous pourrez préparer et ce que vous êtes en droit d’attendre. Lisez-le d’un trait ou revenez à la section qui vous concerne : chaque partie se lit de façon autonome.',
         ],
         quote: 'Si le soin peut être donné de façon sécuritaire à la maison, c’est l’infirmière qui se déplace, pas vous.',
       },
@@ -43,7 +43,7 @@ const article: { FR: ArticleData; EN: ArticleData } = {
         ],
         callout: {
           label: 'Où en sommes-nous ?',
-          text: 'MobiSoins est en préparation. Nous ne donnons pas encore de visites : nous bâtissons notre équipe et nos protocoles pour être prêts dès le lancement. En vous inscrivant à la liste d’attente, vous serez parmi les premiers informés.',
+          text: 'Les visites MobiSoins sont offertes dès maintenant dans le Grand Montréal. Téléchargez l’app MobiSoins sur l’App Store ou Google Play pour réserver une infirmière membre de l’OIIQ.',
         },
       },
       {
@@ -296,7 +296,7 @@ const article: { FR: ArticleData; EN: ArticleData } = {
           'Conservez au même endroit vos consignes, votre liste de médicaments et vos résultats. Si vous avez un médecin de famille ou une IPS, informez-les des soins reçus : la continuité entre les professionnels est l’un des meilleurs remparts contre les erreurs et les examens en double.',
           'Dans les jours qui suivent, notez ce que vous observez : une plaie qui s’améliore ou non, des lectures de tension, un effet secondaire. Ces notes seront précieuses à la visite suivante. Et si vous avez oublié de poser une question, ce n’est pas grave : notez-la pour la prochaine fois ou, si elle ne peut pas attendre, communiquez avec nous ou avec Info-Santé 811 selon la situation.',
           'Si vos résultats de laboratoire doivent être transmis à votre médecin, vérifiez avant la fin de la visite que ses coordonnées sont exactes. Et si vous n’avez pas de médecin de famille, dites-le franchement : l’infirmière pourra vous expliquer comment vos résultats vous seront communiqués et vers qui vous tourner si l’un d’eux demande une attention particulière. Aucun résultat ne devrait tomber entre deux chaises.',
-          'Enfin, n’hésitez pas à nous dire ce qui a bien fonctionné et ce qui pourrait être amélioré. Comme service en préparation, nous voulons bâtir nos façons de faire à partir de l’expérience réelle des patients et de leurs proches.',
+          'Enfin, n’hésitez pas à nous dire ce qui a bien fonctionné et ce qui pourrait être amélioré. Comme jeune service, nous voulons bâtir nos façons de faire à partir de l’expérience réelle des patients et de leurs proches.',
         ],
         links: [
           { label: 'Bilan de santé complet', href: '/services/bilan-complet' },
@@ -440,8 +440,8 @@ const article: { FR: ArticleData; EN: ArticleData } = {
     conclusion: {
       title: 'Ce qu’il faut retenir',
       content: [
-        'Une première visite bien préparée, c’est dix minutes de préparation pour des mois de suivi plus simple, plus humain et centré sur vos besoins réels. Réservez en ligne, répondez honnêtement aux questions, laissez l’infirmière coordonnatrice réviser votre demande, puis préparez votre dossier et un coin de table.',
-        'Le jour venu, posez vos questions, donnez ou refusez votre consentement en toute liberté, et repartez avec un plan clair pour la suite. MobiSoins prépare ses premières visites au Québec : inscrivez-vous pour être parmi les premiers servis.',
+        'Une première visite bien préparée, c’est dix minutes de préparation pour des mois de suivi plus simple, plus humain et centré sur vos besoins réels. Réservez dans l’app, répondez honnêtement aux questions, laissez l’infirmière coordonnatrice réviser votre demande, puis préparez votre dossier et un coin de table.',
+        'Le jour venu, posez vos questions, donnez ou refusez votre consentement en toute liberté, et repartez avec un plan clair pour la suite. Les visites MobiSoins sont offertes dans le Grand Montréal : téléchargez l’app pour réserver.',
       ],
     },
   },
@@ -470,7 +470,7 @@ const article: { FR: ArticleData; EN: ArticleData } = {
           'A blood draw, a dressing change, suture removal, a monthly injection: these are short procedures nurses perform every day. Yet in Quebec, getting one can swallow half a day, sometimes far more. You book a slot at the test centre, take time off work, find parking, sit in a waiting room, then make the trip home again.',
           'For someone in good health, it is an annoyance. For an older adult who no longer drives, a single parent with a newborn, someone recovering from surgery, or a person living with a chronic illness, it is a real barrier. The result: follow-ups get postponed, dressings are changed too late, and blood work is pushed to “next week.”',
           'MobiSoins was born from exactly this. One of our founders watched his mother spend two full days in a Montreal hospital for care that took only minutes to deliver. The idea is simple: if care can be given safely at home, the nurse should travel, not you.',
-          'This guide is written for the person who is about to welcome a nurse into their home for the very first time, and for the family members who support them. We are preparing our first visits in Quebec: the pages that follow describe how those visits will work, what you can prepare, and what you are entitled to expect. Read it from start to finish or jump to the section that concerns you: each part stands on its own.',
+          'This guide is written for the person who is about to welcome a nurse into their home for the very first time, and for the family members who support them. MobiSoins visits are available in Greater Montreal: the pages that follow describe how they work, what you can prepare, and what you are entitled to expect. Read it from start to finish or jump to the section that concerns you: each part stands on its own.',
         ],
         quote: 'If care can be given safely at home, the nurse should travel, not you.',
       },
@@ -484,7 +484,7 @@ const article: { FR: ArticleData; EN: ArticleData } = {
         ],
         callout: {
           label: 'Where are we now?',
-          text: 'MobiSoins is in preparation. We are not providing visits yet: we are building our team and our protocols so that we are ready on launch day. Join the waitlist and you will be among the first to hear from us.',
+          text: 'MobiSoins visits are available now across Greater Montreal. Download the MobiSoins app on the App Store or Google Play to book an OIIQ-registered nurse.',
         },
       },
       {
@@ -737,7 +737,7 @@ const article: { FR: ArticleData; EN: ArticleData } = {
           'Keep your instructions, medication list, and results in one place. If you have a family doctor or nurse practitioner, let them know about the care you received: continuity between professionals is one of the best safeguards against errors and duplicate tests.',
           'In the days that follow, jot down what you observe: a wound that is or is not improving, blood-pressure readings, a side effect. These notes will be valuable at the next visit. And if you forgot to ask a question, that is fine: write it down for next time or, if it cannot wait, contact us or Info-Santé 811 depending on the situation.',
           'If your lab results need to be sent to your doctor, check before the end of the visit that the contact details are correct. And if you do not have a family doctor, say so plainly: your nurse can explain how your results will reach you and whom to turn to if one of them needs particular attention. No result should fall through the cracks.',
-          'Finally, do not hesitate to tell us what worked well and what could be better. As a service in preparation, we want to build our way of working on the real experience of patients and their families.',
+          'Finally, do not hesitate to tell us what worked well and what could be better. As a young service, we want to build our way of working on the real experience of patients and their families.',
         ],
         links: [
           { label: 'Complete health assessment', href: '/services/bilan-complet' },
@@ -881,8 +881,8 @@ const article: { FR: ArticleData; EN: ArticleData } = {
     conclusion: {
       title: 'Key takeaway',
       content: [
-        'A well-prepared first visit means ten minutes of preparation for months of simpler, more human follow-up centred on your real needs. Book online, answer the questions honestly, let the coordinating nurse review your request, then prepare your file and a corner of the table.',
-        'On the day, ask your questions, give or withhold your consent freely, and leave with a clear plan for what comes next. MobiSoins is preparing its first visits in Quebec: sign up to be among the first served.',
+        'A well-prepared first visit means ten minutes of preparation for months of simpler, more human follow-up centred on your real needs. Book in the app, answer the questions honestly, let the coordinating nurse review your request, then prepare your file and a corner of the table.',
+        'On the day, ask your questions, give or withhold your consent freely, and leave with a clear plan for what comes next. MobiSoins visits are available in Greater Montreal: download the app to book.',
       ],
     },
   },

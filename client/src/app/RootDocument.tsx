@@ -5,6 +5,7 @@ import './globals.css';
 import { DEFAULT_IMAGE, SITE_NAME, SITE_URL, jsonLd, languageAlternates, verificationMetadata } from '../lib/seo';
 import { HOME_DESCRIPTION, ORGANIZATION_LD } from '../lib/organizationLd';
 import { PLAUSIBLE_STUB, analyticsConfig } from '../lib/analytics';
+import { APP_STORE_ID } from '../lib/stores';
 
 // Cookieless visitor analytics; undefined (nothing loads) until the Netlify env vars are set.
 const ANALYTICS = analyticsConfig(process.env);
@@ -67,6 +68,8 @@ export const rootMetadata: Metadata = {
     follow: true,
     googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1 },
   },
+  // Safari on iPhone shows its own "Open / Get" bar for the app (Smart App Banner).
+  itunes: { appId: APP_STORE_ID },
   other: {
     'theme-color': '#003366',
   },

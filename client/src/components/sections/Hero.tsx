@@ -3,20 +3,40 @@
 import { useEffect, useRef, useState } from 'react';
 import { useLanguage } from '../../contexts/LanguageContext';
 import { keepVideoPlaying } from '../../lib/keepVideoPlaying';
-import { PlayStoreButton } from '../ui/play-store-button';
-import { AppStoreButton } from '../ui/app-store-button';
+import { StoreBadges } from '../ui/StoreBadges';
+import { DOWNLOAD_ANCHOR, NOTIFY_FORM_URL } from '../../lib/stores';
+import { GetTheAppLink } from '../ui/GetTheApp';
 
-// Hero background video. The previous photo carousel (HERO_SLIDES) lives in
-// `client/.archive/hero-images/Hero.slides.tsx.bak`; the images themselves are
-// still in `public/nurses/` if we ever want to switch back.
-// Two different clips: the landscape master for sm+ screens, and a dedicated
-// native-vertical clip (`hero-mobile.mp4`, 720x1280 H.264, ~12s) for phones.
-// The previous 528x1080 crop of the landscape footage is kept in
-// `client/.archive/video/`.
-const HERO_VIDEO = '/video/hero.mp4';
-const HERO_POSTER = '/video/hero-poster.jpg';
-const HERO_VIDEO_MOBILE = '/video/hero-mobile.mp4';
-const HERO_POSTER_MOBILE = '/video/hero-mobile-poster.jpg';
+// Hero background: a sharp still that always moves (slow CSS drift), with the
+// film fading in on top as soon as the browser actually plays it.
+//
+// Why both: some places refuse to start ANY video without a tap, muted or not,
+// and no page code can override them: in-app browsers (Instagram / Facebook /
+// LinkedIn WebViews), iOS Low Power Mode, Android Data Saver. There the hero used
+// to sit on a frozen, blurry frame until someone tapped. Now it shows the still,
+// drifting, and the film takes over only if/when it plays (keepVideoPlaying
+// reports 'playing' / 'blocked').
+//
+// Files are re-encoded (2026-11-18) from the 15 Mbps Higgsfield masters
+// (~/Downloads/hf_20260911_193038… landscape, hf_20260912_181321… vertical):
+// HEVC for Apple/modern devices, H.264 fallback, phones at full 1080x1920 (was
+// 720x1280, upscaled ~1.6x on a 3x iPhone). Stills are frame 0 of each film so
+// the cross-fade is seamless. Previous cuts: client/.archive/video/.
+const HEVC = 'video/mp4; codecs="hvc1.1.6.L120.90"';
+const HERO = {
+  desktop: {
+    hevc: '/video/hero-v2.hevc.mp4',
+    h264: '/video/hero-v2.mp4',
+    stillAvif: '/video/hero-v2-still.avif',
+    stillJpg: '/video/hero-v2-still.jpg',
+  },
+  mobile: {
+    hevc: '/video/hero-mobile-v2.hevc.mp4',
+    h264: '/video/hero-mobile-v2.mp4',
+    stillAvif: '/video/hero-mobile-v2-still.avif',
+    stillJpg: '/video/hero-mobile-v2-still.jpg',
+  },
+} as const;
 // Matches the `sm` breakpoint used for the mobile-only scrims below.
 const MOBILE_QUERY = '(max-width: 640px)';
 
@@ -46,38 +66,49 @@ const entrance = (delay: number): React.CSSProperties => ({
 export const Hero = () => {
   const { t } = useLanguage();
   const videoRef = useRef<HTMLVideoElement>(null);
+  // 'loading' → still shown; 'playing' → film faded in; 'still' → film refused, still keeps drifting.
+  const [mode, setMode] = useState<'loading' | 'playing' | 'still'>('loading');
 
-  // Playback must never need a tap on the video: keepVideoPlaying retries on
-  // every resume signal, on the first gesture anywhere, and when playback
-  // stalls. prefers-reduced-motion wins — we hold the first frame instead.
+  // Playback must never need a tap: keepVideoPlaying retries on every resume
+  // signal, on the first gesture anywhere, and when playback stalls; where the
+  // browser refuses outright, it reports 'blocked' and the drifting still stays.
+  // prefers-reduced-motion wins: still only, no drift.
   useEffect(() => {
     const v = videoRef.current;
     if (!v) return;
+    const preferHevc = v.canPlayType(HEVC) !== '';
     return keepVideoPlaying(v, {
       reduceMotion: !!window.matchMedia?.('(prefers-reduced-motion: reduce)').matches,
-      // Pick the cut here rather than with <source media> (browsers only honour
-      // that at first load) or two elements (both files would download). It is
-      // re-picked when the viewport crosses the breakpoint (rotation, resize).
+      // Pick the cut here rather than with <source media> alone (browsers only
+      // honour that at first load); re-picked when the viewport crosses the
+      // breakpoint (rotation, resize).
       sourceQuery: MOBILE_QUERY,
-      pickSource: () =>
-        window.matchMedia?.(MOBILE_QUERY).matches
-          ? { src: HERO_VIDEO_MOBILE, poster: HERO_POSTER_MOBILE }
-          : { src: HERO_VIDEO, poster: HERO_POSTER },
+      pickSource: () => {
+        const cut = window.matchMedia?.(MOBILE_QUERY).matches ? HERO.mobile : HERO.desktop;
+        return preferHevc ? { src: cut.hevc, fallback: cut.h264 } : { src: cut.h264 };
+      },
+      onState: (state) => setMode(state === 'playing' ? 'playing' : 'still'),
     });
   }, []);
 
   return (
     <section
       aria-label="Infirmière MobiSoins arrivant à domicile"
+      data-hero-mode={mode}
       className="relative w-full min-h-screen flex items-end overflow-hidden"
       style={{ backgroundColor: '#031226' }}
     >
-      {/* Background video — muted/looping, plays inline on iOS. The poster shows
-          while it buffers so the hero is never a blank navy box. */}
+      {/* The still: always there, always sharp, gently drifting. The film covers it once it plays. */}
+      <picture className="hero-still absolute inset-0" aria-hidden="true">
+        <source media={MOBILE_QUERY} type="image/avif" srcSet={HERO.mobile.stillAvif} />
+        <source media={MOBILE_QUERY} srcSet={HERO.mobile.stillJpg} />
+        <source type="image/avif" srcSet={HERO.desktop.stillAvif} />
+        <img src={HERO.desktop.stillJpg} alt="" fetchPriority="high" decoding="async" className="h-full w-full object-cover" />
+      </picture>
+      {/* Film — muted/looping/inline, transparent until it really plays, then fades in. */}
       <video
         ref={videoRef}
         className="hero-video absolute inset-0 w-full h-full object-cover"
-        poster={HERO_POSTER}
         autoPlay
         loop
         muted
@@ -85,13 +116,15 @@ export const Hero = () => {
         preload="auto"
         aria-hidden="true"
       >
-        {/* Sources are in the server HTML so the phone starts fetching and
-            autoplaying natively, before any JS has loaded. `media` is only
-            honoured at first load; keepVideoPlaying re-picks on resize. */}
-        <source src={HERO_VIDEO_MOBILE} type="video/mp4" media={MOBILE_QUERY} />
-        <source src={HERO_VIDEO} type="video/mp4" />
+        {/* In the server HTML so the browser starts fetching/autoplaying before any
+            JS. It takes the first entry it can play: HEVC, else H.264 (also its
+            fallback if HEVC fails to decode). keepVideoPlaying re-picks on resize. */}
+        <source src={HERO.mobile.hevc} type={HEVC} media={MOBILE_QUERY} />
+        <source src={HERO.mobile.h264} type="video/mp4" media={MOBILE_QUERY} />
+        <source src={HERO.desktop.hevc} type={HEVC} />
+        <source src={HERO.desktop.h264} type="video/mp4" />
       </video>
-      <style>{'.hero-video::-webkit-media-controls,.hero-video::-webkit-media-controls-start-playback-button,.hero-video::-webkit-media-controls-overlay-play-button{display:none!important;-webkit-appearance:none;opacity:0;}.hero-video{object-position:50% 50%;}@media (max-width:640px){.hero-video{object-position:50% 42%;}}'}</style>
+      <style>{'.hero-video::-webkit-media-controls,.hero-video::-webkit-media-controls-start-playback-button,.hero-video::-webkit-media-controls-overlay-play-button{display:none!important;-webkit-appearance:none;opacity:0;}.hero-video,.hero-still img{object-position:50% 50%;}@media (max-width:640px){.hero-video,.hero-still img{object-position:50% 42%;}}'}</style>
 
       {/* Global cool-down: a light overall tint keeps the footage from washing out
           the white type without dulling the whole frame. */}
@@ -171,17 +204,14 @@ export const Hero = () => {
             <span className="hidden sm:inline">{t('hero.subtitle')}</span>
           </p>
 
-          <div
-            className="mb-6 flex flex-col items-start gap-4 sm:mb-8 sm:flex-row sm:items-center sm:gap-6"
-            style={entrance(0.24)}
-          >
-            <a
-              href="https://docs.google.com/forms/d/1TaBNJ9M7Ks6LW5_Vfyqx5DodEPQZbo06bxX8PvJFLiw/viewform"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group inline-flex h-11 items-center justify-center gap-2.5 rounded bg-white px-5 text-[14.5px] sm:h-14 sm:gap-3 sm:px-7 sm:text-[16px] font-semibold text-ink transition-colors hover:bg-leaf-on-dark hover:text-ink-deep"
+          {/* Get the app. Phones: one button that opens their own store (/app
+              decides from the device), the two badges under it. Computers: the
+              badges are the call to action. */}
+          <div id={DOWNLOAD_ANCHOR} className="scroll-mt-28" style={entrance(0.24)}>
+            <GetTheAppLink
+              className="group mb-2.5 flex h-[52px] w-full items-center justify-center gap-2.5 rounded bg-white px-5 text-[16px] font-semibold text-ink transition-colors hover:bg-leaf-on-dark hover:text-ink-deep sm:hidden"
             >
-              {t('hero.bookNow')}
+              {t('hero.downloadApp')}
               <svg
                 className="transition-transform duration-300 group-hover:translate-x-1"
                 width="18" height="18" viewBox="0 0 24 24" fill="none"
@@ -190,22 +220,30 @@ export const Hero = () => {
               >
                 <path d="M5 12h14" /><path d="M13 6l6 6-6 6" />
               </svg>
-            </a>
-            <a
-              href="#how-it-works"
-              className="hidden self-center border-b border-white/50 pb-[3px] text-[16px] font-medium text-white transition-colors hover:border-white sm:inline"
-            >
-              {t('v2.heroCtaSecondary')}
-            </a>
-          </div>
+            </GetTheAppLink>
+            <p className="mb-5 text-center text-[12.5px] text-white/70 sm:hidden">{t('hero.downloadHint')}</p>
 
-          {/* Store buttons */}
-          <div
-            className="flex flex-wrap items-center gap-2.5 sm:gap-4"
-            style={entrance(0.32)}
-          >
-            <AppStoreButton />
-            <PlayStoreButton />
+            <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:gap-6">
+              <StoreBadges size="sm" fill className="w-full flex-nowrap sm:hidden" />
+              <StoreBadges size="lg" className="hidden sm:flex" />
+              <a
+                href="#how-it-works"
+                className="hidden self-center border-b border-white/50 pb-[3px] text-[16px] font-medium text-white transition-colors hover:border-white sm:inline"
+              >
+                {t('v2.heroCtaSecondary')}
+              </a>
+            </div>
+
+            <p
+              className="mt-5 text-center text-[13px] text-white/75 sm:mt-6 sm:text-left sm:text-[14px]"
+              style={{ textShadow: '0 1px 12px rgba(2,9,20,0.6)' }}
+            >
+              {t('hero.notServed')}{' '}
+              <a href={NOTIFY_FORM_URL} target="_blank" rel="noopener noreferrer" className="text-white underline underline-offset-[3px] hover:text-leaf-on-dark">
+                {t('hero.leaveEmail')}
+              </a>
+              {t('hero.leaveEmailSuffix')}
+            </p>
           </div>
 
         </div>

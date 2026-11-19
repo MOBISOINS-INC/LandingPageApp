@@ -6,13 +6,13 @@ import type { Language } from './i18n';
 const PAGES = {
   home: {
     path: '/',
-    FR: ['Soins infirmiers à domicile à Montréal, Québec', 'Soins infirmiers à domicile au Québec par des infirmières membres de l’OIIQ. Lancement à Montréal, Laval et Longueuil. Inscrivez-vous à la liste d’attente.'],
-    EN: ['Home Nursing Care in Montreal, Quebec', 'Home nursing care in Quebec by OIIQ-licensed nurses. Launching in Montreal, Laval and Longueuil. Join the waitlist to book your first visit.'],
+    FR: ['Soins infirmiers à domicile à Montréal, Québec', 'Soins infirmiers à domicile par des infirmières membres de l’OIIQ à Montréal, Laval et Longueuil. Réservez dans l’app MobiSoins, sur l’App Store et Google Play.'],
+    EN: ['Home Nursing Care in Montreal, Quebec', 'Home nursing care by OIIQ-licensed nurses in Montreal, Laval and Longueuil. Book in the MobiSoins app, on the App Store and Google Play.'],
   },
   apropos: {
     path: '/apropos',
-    FR: ['À propos : soins infirmiers à domicile à Montréal', 'Qui est derrière MobiSoins : une équipe québécoise qui prépare des soins infirmiers à domicile à Montréal, Laval et Longueuil, par des infirmières de l’OIIQ.'],
-    EN: ['About Us: Home Nursing in Montreal', 'Who is behind MobiSoins: a Quebec team preparing home nursing care in Montreal, Laval and Longueuil, delivered by OIIQ-licensed nurses.'],
+    FR: ['À propos : soins infirmiers à domicile à Montréal', 'Qui est derrière MobiSoins : une équipe québécoise qui offre des soins infirmiers à domicile à Montréal, Laval et Longueuil, par des infirmières de l’OIIQ.'],
+    EN: ['About Us: Home Nursing in Montreal', 'Who is behind MobiSoins: a Quebec team offering home nursing care in Montreal, Laval and Longueuil, delivered by OIIQ-licensed nurses.'],
   },
   contact: {
     path: '/contact',

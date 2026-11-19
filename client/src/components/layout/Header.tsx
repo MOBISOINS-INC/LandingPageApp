@@ -7,9 +7,9 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { localizePath, stripLocale } from '../../lib/i18n';
 import { useLanguage } from '../../contexts/LanguageContext';
 import { BrandLogo } from '../ui/BrandLogo';
-
-const WAITLIST_URL =
-  'https://docs.google.com/forms/d/1TaBNJ9M7Ks6LW5_Vfyqx5DodEPQZbo06bxX8PvJFLiw/viewform';
+import { LaunchBanner } from './LaunchBanner';
+import { GetTheAppDialog, handleGetTheAppClick } from '../ui/GetTheApp';
+import { SMART_APP_PATH } from '../../lib/stores';
 
 export const Header = () => {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
@@ -85,8 +85,9 @@ export const Header = () => {
     { name: t('header.contact'), href: '/contact' },
     {
       name: t('header.recruitment'),
-      href: 'https://docs.google.com/forms/d/e/1FAIpQLSfFqlaoCKqzrrPMvfQ8E50Jims2JdRN3fpEuq-5q35Ngd-Qsw/viewform',
-      external: true,
+      // Nurses sign up in the same app (role "Infirmière"): the home section explains it.
+      href: '/#for-nurses',
+      external: false,
     },
   ];
 
@@ -162,6 +163,8 @@ export const Header = () => {
         transition: 'background 0.3s ease, border-color 0.3s ease',
       }}
     >
+      <LaunchBanner />
+      <GetTheAppDialog />
       <div className="container-custom">
         <div className="flex h-16 md:h-24 items-center justify-between gap-6">
 
@@ -308,16 +311,15 @@ export const Header = () => {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -6 }}
                   transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-                  href={WAITLIST_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href={SMART_APP_PATH}
+                  onClick={handleGetTheAppClick}
                   className={`group relative hidden md:inline-flex h-11 items-center gap-2 rounded px-[22px] text-[15px] font-semibold transition-colors ${
                     light
                       ? 'bg-ink text-white hover:bg-ink-deep'
                       : 'bg-white text-ink hover:bg-leaf-on-dark hover:text-ink-deep'
                   }`}
                 >
-                  <span className="relative">{t('header.joinWaitlist')}</span>
+                  <span className="relative">{t('header.downloadApp')}</span>
                   <svg
                     className="relative transition-transform duration-300 group-hover:translate-x-0.5"
                     width="16" height="16" viewBox="0 0 24 24" fill="none"
