@@ -63,6 +63,26 @@ export function appLinkLanguage(opts: {
   return 'FR';
 }
 
+/**
+ * Path of the page a click came from, when that page is on our own site (a
+ * path on someone else's site says nothing about language). Our site = the
+ * public domain (with or without www) or the host the request was served on.
+ * Netlify hands the server its internal deploy host, never mobisoins.com, so
+ * comparing against the request host alone treated every real visitor as external.
+ */
+export function ownSiteRefererPath(referer: string | null | undefined, ownHosts: readonly (string | null | undefined)[]): string | null {
+  if (!referer) return null;
+  let url: URL;
+  try {
+    url = new URL(referer);
+  } catch {
+    return null;
+  }
+  const bare = (h: string) => h.toLowerCase().replace(/^www\./, '');
+  const mine = new Set(ownHosts.filter((h): h is string => !!h).map(bare));
+  return mine.has(bare(url.host)) ? url.pathname : null;
+}
+
 /** Where /app sends a visitor: their store, else the badges on the home page in their language. */
 export function smartAppTarget(userAgent: string | null | undefined, language: 'FR' | 'EN'): string {
   return storeUrlFor(detectPlatform(userAgent)) ?? `${language === 'EN' ? '/en' : '/'}#${DOWNLOAD_ANCHOR}`;

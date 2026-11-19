@@ -8,6 +8,7 @@ import {
   APP_STORE_URL,
   NOTIFY_FORM_URL,
   appLinkLanguage,
+  ownSiteRefererPath,
   PLAY_STORE_URL,
   detectPlatform,
   smartAppTarget,
@@ -65,6 +66,18 @@ test('/app language without a referring page: cookie, then browser, then French'
   assert.equal(appLinkLanguage({ acceptLanguages: ['en-US', 'fr'] }), 'FR');
   assert.equal(appLinkLanguage({}), 'FR');
   assert.equal(appLinkLanguage({ cookie: 'xx', acceptLanguages: [] }), 'FR');
+});
+
+test('/app referer: mobisoins.com counts as our site even though Netlify serves us on its own host', () => {
+  // The prod bug: request host was "<deploy>--mobisoins.netlify.app", so an /en click on www.mobisoins.com looked external.
+  const own = ['www.mobisoins.com', '6afe6fc16617241343c74359--mobisoins.netlify.app'];
+  assert.equal(ownSiteRefererPath('https://www.mobisoins.com/en/faq', own), '/en/faq');
+  assert.equal(ownSiteRefererPath('https://mobisoins.com/', own), '/', 'apex = www');
+  assert.equal(ownSiteRefererPath('https://deploy-preview-6--mobisoins.netlify.app/en', [...own, 'deploy-preview-6--mobisoins.netlify.app']), '/en');
+  assert.equal(ownSiteRefererPath('https://www.instagram.com/en/', own), null, 'other sites say nothing about language');
+  assert.equal(ownSiteRefererPath('not a url', own), null);
+  assert.equal(ownSiteRefererPath(null, own), null);
+  assert.equal(ownSiteRefererPath('https://evil-mobisoins.com/en', own), null, 'exact host match only');
 });
 
 // Regression guard: after launch no page may still promise a future launch or
