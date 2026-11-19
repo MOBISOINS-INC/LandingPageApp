@@ -314,9 +314,9 @@
 @media (max-width: 767px) { .aurora { animation: none; } }
 
 /* ── Launch banner (components/layout/LaunchBanner.tsx) ──
-   Fixed height so inner pages can clear it (PageShell). After a minute (or the
-   close button) <html data-launch-banner="off"> slides it shut: the height and
-   the page offset animate to 0 together, then it is hidden from tab order. */
+   Fixed height so inner pages can clear it (PageShell). It stays up the whole
+   visit; only the × sets <html data-launch-banner="off">, which slides it shut:
+   the height and the page offset animate to 0 together, then it is hidden. */
 @property --launch-banner-h { syntax: '<length>'; inherits: true; initial-value: 2.5rem; }
 :root { --launch-banner-h: 2.5rem; transition: --launch-banner-h 0.5s cubic-bezier(0.32, 0.72, 0, 1); }
 :root[data-launch-banner="off"] { --launch-banner-h: 0px; }

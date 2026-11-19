@@ -1,56 +1,50 @@
 'use client';
 
-import { useEffect } from 'react';
 import { useLanguage } from '../../contexts/LanguageContext';
 import { GetTheAppLink } from '../ui/GetTheApp';
-import { LAUNCH_BANNER_ATTR, launchBannerMsLeft } from '../../lib/launchBanner';
-
-const hide = (why: string) => {
-  document.documentElement.setAttribute(LAUNCH_BANNER_ATTR, 'off');
-  console.info(`[launch-banner] hidden (${why})`);
-};
+import { LAUNCH_BANNER_ATTR } from '../../lib/launchBanner';
 
 /**
  * Thin launch bar at the very top of the fixed header: "MobiSoins est maintenant
- * sur l'App Store et Google Play". Shows on every page load, then slides away
- * after a minute (lib/launchBanner.ts); the × closes it sooner. Nothing is stored,
- * so a refresh brings it back. The clock is the page load (performance.timeOrigin),
- * not this component: the header remounts on each page, and moving between pages
- * must not restart the minute.
+ * sur l'App Store et Google Play". Owner's rule (2026-11-19, "very important"):
+ * it NEVER leaves on its own — no timer. It stays the whole visit; only the ×
+ * closes it, for this page view (nothing is stored, a refresh brings it back).
+ * Guarded by lib/launchBanner.test.ts.
  */
 export const LaunchBanner = () => {
   const { t } = useLanguage();
 
-  useEffect(() => {
-    const left = launchBannerMsLeft(performance.timeOrigin, Date.now());
-    if (left === 0) {
-      hide('time up');
-      return;
-    }
-    const timer = window.setTimeout(() => hide('time up'), left);
-    return () => window.clearTimeout(timer);
-  }, []);
+  const close = () => {
+    document.documentElement.setAttribute(LAUNCH_BANNER_ATTR, 'off');
+    console.info('[launch-banner] closed by the visitor');
+  };
 
+  // Laid on the header's own grid (container-custom): the message starts where the
+  // logo starts, and the × sits exactly over the menu button (same 18px icon, same
+  // 2px stroke, same column). The whole message is the link, not just the arrow.
   return (
-    <div className="launch-banner relative flex h-[var(--launch-banner-h)] items-center justify-center overflow-hidden bg-leaf-on-dark pl-4 pr-12 text-ink-deep">
-      <p className="min-w-0 truncate text-[13px] sm:text-[14.5px]">
-        <span className="font-semibold sm:hidden">{t('hero.launchBannerShort')}</span>
-        <span className="hidden font-semibold sm:inline">{t('hero.launchBanner')}</span>{' '}
-        <GetTheAppLink className="font-semibold underline underline-offset-[3px] hover:text-ink">
-          <span className="sm:hidden">→</span>
-          <span className="hidden sm:inline">{t('hero.launchBannerCta')} →</span>
+    <div className="launch-banner h-[var(--launch-banner-h)] overflow-hidden bg-leaf-on-dark text-ink-deep">
+      <div className="container-custom flex h-full items-center gap-2 sm:gap-3">
+        <GetTheAppLink className="group flex min-w-0 flex-1 items-center gap-1.5 text-[12px] font-semibold min-[390px]:text-[13px] sm:justify-center sm:text-[14.5px]">
+          <span className="truncate">
+            <span className="sm:hidden">{t('hero.launchBannerShort')}</span>
+            <span className="hidden sm:inline">{t('hero.launchBanner')}</span>
+          </span>
+          <span className="hidden shrink-0 underline underline-offset-[3px] sm:inline">{t('hero.launchBannerCta')}</span>
+          <span aria-hidden="true" className="shrink-0 transition-transform duration-200 group-hover:translate-x-0.5">→</span>
         </GetTheAppLink>
-      </p>
-      <button
-        type="button"
-        onClick={() => hide('closed')}
-        aria-label={t('hero.launchBannerClose')}
-        className="absolute right-0 top-0 flex h-full w-11 items-center justify-center text-ink-deep hover:text-ink"
-      >
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
-          <path d="M6 6l12 12M18 6L6 18" />
-        </svg>
-      </button>
+        <button
+          type="button"
+          onClick={close}
+          aria-label={t('hero.launchBannerClose')}
+          className="-mr-1 flex h-10 w-11 shrink-0 items-center justify-center rounded-lg text-ink-deep transition-colors hover:text-ink"
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+      </div>
     </div>
   );
 };
