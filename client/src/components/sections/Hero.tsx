@@ -194,6 +194,8 @@ export const Hero = () => {
               <span className="h-px w-5 shrink-0 bg-leaf-on-dark sm:w-7" aria-hidden="true" />
               {t('v2.heroBadge')}
             </span>
+            {/* Space so the heading text reads "…Québec Une infirmière…", not "QuébecUne". */}
+            {' '}
             {t('hero.title')}{' '}
             <em className="text-leaf-on-dark">{t('hero.titleHighlight')}.</em>
           </h1>
