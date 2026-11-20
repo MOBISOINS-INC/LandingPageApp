@@ -197,7 +197,10 @@ export const Hero = () => {
             {/* Space so the heading text reads "…Québec Une infirmière…", not "QuébecUne". */}
             {' '}
             {t('hero.title')}{' '}
-            <em className="text-leaf-on-dark">{t('hero.titleHighlight')}.</em>
+            {/* 1.1em: Newsreader's light italic draws ~8% narrower and thinner than
+                the roman, so at the same size "en un clic" read smaller than the
+                white words (owner, 2026-11-19). Bumped so both halves look equal. */}
+            <em className="text-leaf-on-dark" style={{ fontSize: '1.1em' }}>{t('hero.titleHighlight')}.</em>
           </h1>
 
           <p
