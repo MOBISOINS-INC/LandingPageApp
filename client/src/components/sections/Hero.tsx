@@ -174,14 +174,9 @@ export const Hero = () => {
 
       <div className="container-custom w-full relative z-10 pt-28 pb-16 sm:pb-20 lg:pb-24">
         <div className="max-w-[40rem]">
-          <div
-            className="mb-5 flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.14em] text-leaf-on-dark sm:mb-7 sm:text-[13px]"
-            style={entrance(0)}
-          >
-            <span className="h-px w-5 bg-leaf-on-dark sm:w-7" aria-hidden="true" />
-            {t('v2.heroBadge')}
-          </div>
-
+          {/* The eyebrow sits INSIDE the h1 (looks the same) so the page's main
+              heading still says where we are: "Grand Montréal, Québec" +
+              "infirmière à domicile en un clic". Copy: src/data/heroCopy.ts. */}
           <h1
             className="mb-5 font-display text-[2.9rem] font-light leading-none tracking-[-0.025em] sm:mb-7 sm:text-[clamp(3.4rem,5.4vw,5.25rem)] sm:leading-[0.98]"
             style={{
@@ -192,6 +187,15 @@ export const Hero = () => {
               MozOsxFontSmoothing: 'grayscale',
             }}
           >
+            <span
+              className="mb-5 flex items-center gap-3 text-[11px] font-semibold uppercase leading-[1.4] tracking-[0.14em] text-leaf-on-dark sm:mb-7 sm:text-[13px]"
+              style={{ textShadow: 'none', fontFamily: 'var(--font-inter), -apple-system, BlinkMacSystemFont, sans-serif' }}
+            >
+              <span className="h-px w-5 shrink-0 bg-leaf-on-dark sm:w-7" aria-hidden="true" />
+              {t('v2.heroBadge')}
+            </span>
+            {/* Space so the heading text reads "…Québec Une infirmière…", not "QuébecUne". */}
+            {' '}
             {t('hero.title')}{' '}
             <em className="text-leaf-on-dark">{t('hero.titleHighlight')}.</em>
           </h1>

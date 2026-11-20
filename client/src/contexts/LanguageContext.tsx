@@ -5,6 +5,7 @@ import type { ReactNode } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { LANG_COOKIE, LANG_COOKIE_MAX_AGE, localeFromPath, localizePath, stripLocale } from '../lib/i18n';
 import type { Language } from '../lib/i18n';
+import { HERO_COPY } from '../data/heroCopy';
 
 /** Remember the switcher choice where the server-side redirect (src/proxy.ts) can read it. */
 const writeLanguageCookie = (lang: Language) => {
@@ -96,7 +97,7 @@ const translations = {
     // Copy for the product-led landing redesign (desktop first). Kept in its own
     // `v2` block so the legacy section keys other pages still use stay untouched.
     v2: {
-      heroBadge: 'Infirmières autorisées OIIQ · Québec',
+      heroBadge: HERO_COPY.FR.badge,
       heroCtaPrimary: 'Télécharger l\'app',
       heroCtaSecondary: 'Voir comment ça marche',
 
@@ -176,10 +177,10 @@ const translations = {
     },
     hero: {
       availableInQuebec: 'Disponible au Québec',
-      title: 'Une infirmière à domicile',
-      titleHighlight: 'à Montréal',
-      subtitle: 'Des infirmières autorisées, réservées en quelques clics. Professionnel, sécurisé, disponible 24/7.',
-      subtitleShort: 'Des infirmières autorisées, réservées en quelques clics.',
+      title: HERO_COPY.FR.title,
+      titleHighlight: HERO_COPY.FR.titleHighlight,
+      subtitle: HERO_COPY.FR.subtitle,
+      subtitleShort: HERO_COPY.FR.subtitleShort,
       bookNow: 'Télécharger l\'app',
       downloadApp: 'Télécharger l’app',
       downloadHint: 'Ouvre l’App Store sur iPhone, Google Play sur Android.',
@@ -615,7 +616,7 @@ const translations = {
   },
   EN: {
     v2: {
-      heroBadge: 'Licensed OIIQ nurses · Quebec',
+      heroBadge: HERO_COPY.EN.badge,
       heroCtaPrimary: 'Download the app',
       heroCtaSecondary: 'See how it works',
 
@@ -695,10 +696,10 @@ const translations = {
     },
     hero: {
       availableInQuebec: 'Available in Quebec',
-      title: 'A home care nurse',
-      titleHighlight: 'in Montreal',
-      subtitle: 'Licensed nurses, booked in a few taps. Professional, secure, available 24/7.',
-      subtitleShort: 'Licensed nurses, booked in a few taps.',
+      title: HERO_COPY.EN.title,
+      titleHighlight: HERO_COPY.EN.titleHighlight,
+      subtitle: HERO_COPY.EN.subtitle,
+      subtitleShort: HERO_COPY.EN.subtitleShort,
       bookNow: 'Download the app',
       downloadApp: 'Download the app',
       downloadHint: 'Opens the App Store on iPhone, Google Play on Android.',
