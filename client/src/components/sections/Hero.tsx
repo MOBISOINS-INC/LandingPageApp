@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useLanguage } from '../../contexts/LanguageContext';
 import { keepVideoPlaying } from '../../lib/keepVideoPlaying';
+import { HERO, HEVC, HEVC_HI, HIRES_QUERY, MOBILE_QUERY, pickHeroSource } from '../../lib/heroSources';
 import { StoreBadges } from '../ui/StoreBadges';
 import { DOWNLOAD_ANCHOR, NOTIFY_FORM_URL } from '../../lib/stores';
 import { GetTheAppLink } from '../ui/GetTheApp';
@@ -22,23 +23,9 @@ import { GetTheAppLink } from '../ui/GetTheApp';
 // HEVC for Apple/modern devices, H.264 fallback, phones at full 1080x1920 (was
 // 720x1280, upscaled ~1.6x on a 3x iPhone). Stills are frame 0 of each film so
 // the cross-fade is seamless. Previous cuts: client/.archive/video/.
-const HEVC = 'video/mp4; codecs="hvc1.1.6.L120.90"';
-const HERO = {
-  desktop: {
-    hevc: '/video/hero-v2.hevc.mp4',
-    h264: '/video/hero-v2.mp4',
-    stillAvif: '/video/hero-v2-still.avif',
-    stillJpg: '/video/hero-v2-still.jpg',
-  },
-  mobile: {
-    hevc: '/video/hero-mobile-v2.hevc.mp4',
-    h264: '/video/hero-mobile-v2.mp4',
-    stillAvif: '/video/hero-mobile-v2-still.avif',
-    stillJpg: '/video/hero-mobile-v2-still.jpg',
-  },
-} as const;
-// Matches the `sm` breakpoint used for the mobile-only scrims below.
-const MOBILE_QUERY = '(max-width: 640px)';
+// 2026-11-24: a 4K film for large / high-density screens and a sharper phone
+// film sit on top of those as optional tiers. Which device gets which file is
+// decided in lib/heroSources.ts (unit-tested); the 1080p files stay the fallback.
 
 // Framer Motion drives the mount entrance off animation frames, which a
 // background tab does not deliver — the hero would freeze part-way (often at
@@ -76,7 +63,10 @@ export const Hero = () => {
   useEffect(() => {
     const v = videoRef.current;
     if (!v) return;
-    const preferHevc = v.canPlayType(HEVC) !== '';
+    const canHevc = v.canPlayType(HEVC) !== '';
+    const canHevcHi = v.canPlayType(HEVC_HI) !== '';
+    const saveData = !!(navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData;
+    let announced = '';
     return keepVideoPlaying(v, {
       reduceMotion: !!window.matchMedia?.('(prefers-reduced-motion: reduce)').matches,
       // Pick the cut here rather than with <source media> alone (browsers only
@@ -84,8 +74,19 @@ export const Hero = () => {
       // breakpoint (rotation, resize).
       sourceQuery: MOBILE_QUERY,
       pickSource: () => {
-        const cut = window.matchMedia?.(MOBILE_QUERY).matches ? HERO.mobile : HERO.desktop;
-        return preferHevc ? { src: cut.hevc, fallback: cut.h264 } : { src: cut.h264 };
+        const picked = pickHeroSource({
+          mobile: !!window.matchMedia?.(MOBILE_QUERY).matches,
+          hiRes: !!window.matchMedia?.(HIRES_QUERY).matches,
+          canHevc,
+          canHevcHi,
+          saveData,
+        });
+        // Always-on, once per change: which film this device was given and why.
+        if (picked.src !== announced) {
+          announced = picked.src;
+          console.info('[hero] film', picked.src, { fallback: picked.fallback ?? null, canHevc, canHevcHi, saveData });
+        }
+        return picked;
       },
       onState: (state) => setMode(state === 'playing' ? 'playing' : 'still'),
     });
@@ -117,10 +118,13 @@ export const Hero = () => {
         aria-hidden="true"
       >
         {/* In the server HTML so the browser starts fetching/autoplaying before any
-            JS. It takes the first entry it can play: HEVC, else H.264 (also its
-            fallback if HEVC fails to decode). keepVideoPlaying re-picks on resize. */}
+            JS. It takes the first entry it can play: the Hi tier where the screen
+            and decoder allow, else HEVC, else H.264 (also its fallback if HEVC
+            fails to decode). keepVideoPlaying re-picks on resize. */}
+        <source src={HERO.mobileHi.hevc} type={HEVC_HI} media={MOBILE_QUERY} />
         <source src={HERO.mobile.hevc} type={HEVC} media={MOBILE_QUERY} />
         <source src={HERO.mobile.h264} type="video/mp4" media={MOBILE_QUERY} />
+        <source src={HERO.desktopHi.hevc} type={HEVC_HI} media={HIRES_QUERY} />
         <source src={HERO.desktop.hevc} type={HEVC} />
         <source src={HERO.desktop.h264} type="video/mp4" />
       </video>
