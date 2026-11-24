@@ -85,9 +85,10 @@ export const Header = () => {
     { name: t('header.contact'), href: '/contact' },
     {
       name: t('header.recruitment'),
-      // Nurses sign up in the same app (role "Infirmière"): the home section explains it.
-      href: '/#for-nurses',
-      external: false,
+      // Opens the nurse recruitment form (Google Form) in a new tab, as it did
+      // before the store launch. The home "for nurses" section still points to the app.
+      href: 'https://docs.google.com/forms/d/e/1FAIpQLSd_4xRpjxg-Yml0oJYwec5elHmVFI80Qfibk9HYGZMMnCREBg/viewform',
+      external: true,
     },
   ];
 
